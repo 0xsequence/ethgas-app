@@ -1,0 +1,20 @@
+bin/*
+etc/ethstats.conf
+*.tmp
+
+# Ignore everything in vendor/, except for certain files.
+# LICENSE and COPYING. Ignore Go tests.
+vendor/**/*
+
+# keep files..
+!vendor/**/
+!vendor/modules.txt
+!vendor/**/*.go
+!vendor/**/*.h
+!vendor/**/*.s
+!vendor/**/*.c
+!vendor/**/*.sh
+!vendor/**/*.pl
+!vendor/**/*.proto
+!vendor/**/LICENSE*
+!vendor/**/COPYING*
