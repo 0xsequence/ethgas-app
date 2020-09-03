@@ -1,0 +1,28 @@
+webrpc = v1
+
+name = api
+version = v0.1.0
+
+message Version
+  - webrpcVersion: string
+  - schemaVersion: string
+  - schemaHash: string
+  - appVersion: string
+
+message SuggestedGasPrice
+  - blockNum: uint64
+  - blockTime: uint64
+  - rapid: uint64
+  - fast: uint64
+  - standard: uint64
+  - slow: uint64
+
+service ETHGas
+  - Ping() => (ok: bool)
+  - Version() => (version: Version)
+
+  - SuggestedGasPrice() => (suggestedGasPrice: SuggestedGasPrice)
+
+  - History() => (data: map<uint64,[]uint64>)
+
+  # TODO: should be, since a blockNumber..

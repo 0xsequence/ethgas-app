@@ -1,2 +1,2 @@
-ethstats
-========
+ethgas app
+==========

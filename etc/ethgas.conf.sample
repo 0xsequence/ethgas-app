@@ -1,0 +1,13 @@
+listen          = "0.0.0.0:4444"
+
+[logging]
+  service       = "ethgas-local"
+  level         = "INFO"
+  json          = false
+  concise       = true
+
+[auth]
+  jwt_secret    = "asdf"
+
+[ethereum]
+  url           = ""

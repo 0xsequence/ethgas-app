@@ -1,5 +1,5 @@
 bin/*
-etc/ethstats.conf
+etc/ethgas.conf
 *.tmp
 
 # Ignore everything in vendor/, except for certain files.
