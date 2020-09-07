@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/arcadeum/ethgas-app/proto"
+	"github.com/arcadeum/ethgas-app/tracker"
 )
 
 func (s *RPC) SuggestedGasPrice(ctx context.Context) (*proto.SuggestedGasPrice, error) {
@@ -25,6 +26,61 @@ func (s *RPC) SuggestedGasPrice(ctx context.Context) (*proto.SuggestedGasPrice, 
 	return resp, nil
 }
 
-func (s *RPC) History(ctx context.Context) (map[uint64][]uint64, error) {
-	return s.GasTracker.History, nil
+func (s *RPC) AllSuggestedGasPrices(ctx context.Context, count *uint) ([]*proto.SuggestedGasPrice, error) {
+	data := s.GasTracker.Suggested
+	if len(data) == 0 {
+		return nil, proto.Errorf(proto.ErrAborted, "suggested price hasn't been computed yet")
+	}
+
+	c := uint(tracker.NumDataPoints)
+	if count != nil && int(*count) > 0 && int(*count) < tracker.NumDataPoints {
+		c = *count
+	}
+
+	resp := []*proto.SuggestedGasPrice{}
+	for i, v := range data {
+		if uint(i) >= c {
+			break
+		}
+		d := &proto.SuggestedGasPrice{
+			BlockNum:  v.BlockNum.Uint64(),
+			BlockTime: v.BlockTime,
+			Rapid:     v.Rapid,
+			Fast:      v.Fast,
+			Standard:  v.Standard,
+			Slow:      v.Slow,
+		}
+		resp = append(resp, d)
+	}
+
+	return resp, nil
+}
+
+func (s *RPC) AllGasStats(ctx context.Context, count *uint) ([]*proto.GasStat, error) {
+	data := s.GasTracker.Actual
+	if len(data) == 0 {
+		return nil, proto.Errorf(proto.ErrAborted, "suggested price hasn't been computed yet")
+	}
+
+	c := uint(tracker.NumDataPoints)
+	if count != nil && int(*count) > 0 && int(*count) < tracker.NumDataPoints {
+		c = *count
+	}
+
+	resp := []*proto.GasStat{}
+	for i, v := range data {
+		if uint(i) >= c {
+			break
+		}
+		d := &proto.GasStat{
+			BlockNum:  v.BlockNum.Uint64(),
+			BlockTime: v.BlockTime,
+			Max:       v.Max,
+			Average:   v.Average,
+			Min:       v.Min,
+		}
+		resp = append(resp, d)
+	}
+
+	return resp, nil
 }

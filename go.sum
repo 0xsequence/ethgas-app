@@ -36,6 +36,8 @@ github.com/arcadeum/ethkit v1.1.4-0.20200903020529-c94e7a3db9fe h1:CWFXROw8blEz2
 github.com/arcadeum/ethkit v1.1.4-0.20200903020529-c94e7a3db9fe/go.mod h1:4AWFm6lj26PVfhAUmZAoGzhdgK/ikzxO32UVyMfXhcM=
 github.com/arcadeum/ethkit v1.1.4-0.20200903190732-a79d535f8e2d h1:nU6m2yd+xPVKOKR7OtiHiW215JMju5sirkkD8QqDANQ=
 github.com/arcadeum/ethkit v1.1.4-0.20200903190732-a79d535f8e2d/go.mod h1:4AWFm6lj26PVfhAUmZAoGzhdgK/ikzxO32UVyMfXhcM=
+github.com/arcadeum/ethkit v1.1.4-0.20200907222217-9c65a18c16f0 h1:czCQe7M5e2F4uEkxEZVBdyGUikTSv9V5+wBi1G1kVjI=
+github.com/arcadeum/ethkit v1.1.4-0.20200907222217-9c65a18c16f0/go.mod h1:4AWFm6lj26PVfhAUmZAoGzhdgK/ikzxO32UVyMfXhcM=
 github.com/aristanetworks/fsnotify v1.4.2/go.mod h1:D/rtu7LpjYM8tRJphJ0hUBYpjai8SfX+aSNsWDTq/Ks=
 github.com/aristanetworks/glog v0.0.0-20180419172825-c15b03b3054f/go.mod h1:KASm+qXFKs/xjSoWn30NrWBBvdTTQq+UjkhjEJHfSFA=
 github.com/aristanetworks/goarista v0.0.0-20170210015632-ea17b1a17847/go.mod h1:D/tb0zPVXnP7fmsLZjtdUhSsumbK/ij54UXjjVgMGxQ=

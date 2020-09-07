@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { hot } from 'react-hot-loader/root'
 import { withRouter } from 'react-router'
-import { Routes } from '~/routes'
+import { Routes } from '~/modules'
 import { Reset, ThemeProvider, theme, Styled } from '~/style'
 
 const App = () => {

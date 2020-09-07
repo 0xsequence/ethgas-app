@@ -4,18 +4,28 @@ import { ResponsiveLine } from '@nivo/line'
 export const LineChart = ({ data }) => (
     <ResponsiveLine
       data={data}
-      margin={{ top: 0, right: 50, bottom: 60, left: 60 }}
+      margin={{ top: 10, right: 50, bottom: 85, left: 60 }}
       xScale={{ type: 'point' }}
       yScale={{ type: 'linear', min: 'auto', max: 'auto', reverse: false }}
       axisTop={null}
       axisRight={null}
       axisBottom={{
-        orient: 'bottom',
+        orient: 'top',
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: 0,
+        tickRotation: 90,
+        tickValues: 40,
+        // format: (value: number): string | number => {
+        //   if (value % 2 === 0) {
+        //     console.log('value........', value)
+        //     return `${value}`
+        //   } else {
+        //     console.log('value, skip')
+        //     return ''
+        //   }
+        // },
         legend: 'block #',
-        legendOffset: 50,
+        legendOffset: 80,
         legendPosition: 'middle'
       }}
       axisLeft={{
@@ -44,10 +54,19 @@ export const LineChart = ({ data }) => (
             }
           }
         },
+        crosshair: {
+          line: {
+            stroke: 'white'
+          }
+        },
         legends: {
         },
-        markers: {
-          lineColor: '#ff0000'
+        grid: {
+          line: {
+            stroke: '#333',
+            strokeWidth: 2,
+            // strokeDasharray: "4 4"
+          }
         },
         tooltip: {
           container: {
@@ -78,16 +97,18 @@ export const LineChart = ({ data }) => (
         //   }
         // },
       }}
-      pointSize={10}
-      pointColor={{ theme: 'background' }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: 'serieColor' }}
-      pointLabel="y"
-      pointLabelYOffset={-12}
+      // pointSize={10}
+      // pointColor={{ theme: 'background' }}
+      // pointBorderWidth={2}
+      // pointBorderColor={{ from: 'serieColor' }}
+      // pointBorderColor={'red'}
+      // pointLabel="y"
+      // pointLabelYOffset={-12}
       useMesh={true}
       enablePoints={false}
-      enableGridX={true}
+      enableGridX={false}
       enableSlices={'x'}
+      enableCrosshair={true}
 
       // legends={[
       //     {

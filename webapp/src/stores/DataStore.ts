@@ -35,8 +35,17 @@ export class DataStore {
   async poll() {
     const api = this.root.api
 
-    const { suggestedGasPrice } = await api.suggestedGasPrice()
+    let count = 100
+    if (this.lastBlockPolled > 0) {
+      count = 5
+    }
 
+    const { suggestedGasPrices } = await api.allSuggestedGasPrices({ count: count })
+
+    if (suggestedGasPrices.length === 0) {
+      return
+    }
+    const suggestedGasPrice = suggestedGasPrices[suggestedGasPrices.length-1]
     if (this.lastBlockPolled > 0 && this.lastBlockPolled === suggestedGasPrice.blockNum) {
       return
     }

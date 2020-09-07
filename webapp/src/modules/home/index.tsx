@@ -74,8 +74,8 @@ export const HomeRoute = () => {
         fontSize: 12,
         textAlign: 'center'
       }}>
-        Fork it <Styled.a href="https://github.com">github.com/arcadeum/ethgas-app</Styled.a>,
-        by <Styled.a href="">Horizon.io</Styled.a>
+        Fork it <Styled.a target="_blank" href="https://github.com/arcadeum/ethgas-app">github.com/arcadeum/ethgas-app</Styled.a>,
+        by <Styled.a target="_blank" href="https://horizon.io">Horizon.io</Styled.a>
       </Box>
 
     </Box>

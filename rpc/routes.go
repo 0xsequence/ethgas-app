@@ -20,8 +20,19 @@ func routesV1(rpc *RPC) chi.Router {
 		respondJSON(w, suggestedGasPrice)
 	})
 
-	r.Get("/gas/history", func(w http.ResponseWriter, r *http.Request) {
-		history, err := rpc.History(r.Context())
+	r.Get("/gas/history/suggested", func(w http.ResponseWriter, r *http.Request) {
+		c := uint(20)
+		history, err := rpc.AllSuggestedGasPrices(r.Context(), &c)
+		if err != nil {
+			respondJSON(w, err)
+			return
+		}
+		respondJSON(w, history)
+	})
+
+	r.Get("/gas/history/actual", func(w http.ResponseWriter, r *http.Request) {
+		c := uint(20)
+		history, err := rpc.AllGasStats(r.Context(), &c)
 		if err != nil {
 			respondJSON(w, err)
 			return

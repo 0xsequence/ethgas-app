@@ -7,7 +7,7 @@ listen          = "0.0.0.0:4444"
   concise       = true
 
 [auth]
-  jwt_secret    = "asdf"
+  jwt_secret    = "xxx"
 
 [ethereum]
-  url           = ""
+  url           = "https://mainnet.infura.io/v3/xxx"

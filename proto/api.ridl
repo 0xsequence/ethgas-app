@@ -17,12 +17,18 @@ message SuggestedGasPrice
   - standard: uint64
   - slow: uint64
 
+message GasStat
+  - blockNum: uint64
+  - blockTime: uint64
+  - max: uint64
+  - average: uint64
+  - min: uint64
+
 service ETHGas
   - Ping() => (ok: bool)
   - Version() => (version: Version)
 
   - SuggestedGasPrice() => (suggestedGasPrice: SuggestedGasPrice)
 
-  - History() => (data: map<uint64,[]uint64>)
-
-  # TODO: should be, since a blockNumber..
+  - AllSuggestedGasPrices(count?: uint) => (suggestedGasPrices: []SuggestedGasPrice)
+  - AllGasStats(count?: uint) => (gasStats: []GasStat)
