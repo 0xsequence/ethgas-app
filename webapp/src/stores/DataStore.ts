@@ -31,7 +31,8 @@ export class DataStore {
     { 'id': 'max', 'data': [] }
   ]
 
-  lastBlockPolled: number = 0
+  lastSuggestedPoll: number = 0
+  lastActualPoll: number = 0
   updated = observable<number>(0)
 
   constructor(private root: RootStore) {
@@ -48,7 +49,7 @@ export class DataStore {
     const api = this.root.api
 
     let count = 100
-    if (this.lastBlockPolled > 0) {
+    if (this.lastSuggestedPoll > 0) {
       count = 5
     }
 
@@ -58,12 +59,12 @@ export class DataStore {
       return
     }
     const suggestedGasPrice = suggestedGasPrices[suggestedGasPrices.length-1]
-    if (this.lastBlockPolled > 0 && this.lastBlockPolled === suggestedGasPrice.blockNum) {
+    if (this.lastSuggestedPoll > 0 && this.lastSuggestedPoll === suggestedGasPrice.blockNum) {
       return
     }
 
     const blockNum = suggestedGasPrice.blockNum
-    this.lastBlockPolled = blockNum
+    this.lastSuggestedPoll = blockNum
 
     this.suggestedFast.set(suggestedGasPrice.fast)
     this.suggestedStandard.set(suggestedGasPrice.standard)
@@ -76,7 +77,7 @@ export class DataStore {
     const api = this.root.api
 
     let count = 100
-    if (this.lastBlockPolled > 0) {
+    if (this.lastActualPoll > 0) {
       count = 5
     }
 
@@ -86,9 +87,12 @@ export class DataStore {
       return
     }
     const gasStat = gasStats[gasStats.length-1]
-    if (this.lastBlockPolled > 0 && this.lastBlockPolled === gasStat.blockNum) {
+    if (this.lastActualPoll > 0 && this.lastActualPoll === gasStat.blockNum) {
       return
     }
+
+    const blockNum = gasStat.blockNum
+    this.lastActualPoll = blockNum
 
     this.actualMax.set(gasStat.max)
     this.actualAverage.set(gasStat.average)
@@ -147,7 +151,7 @@ export class DataStore {
     }
 
     // will trigger a re-render as it updates the set value
-    const lastBlockNum = parseInt(this.suggestedDataset[0].data[len-1].x)
+    const lastBlockNum = parseInt(this.suggestedDataset[0].data[this.suggestedDataset[0].data.length-1].x)
     this.updated.set(lastBlockNum)
   }
 
@@ -201,7 +205,8 @@ export class DataStore {
     }
 
     // will trigger a re-render as it updates the set value
-    const lastBlockNum = parseInt(this.actualDataset[0].data[len-1].x)
+    const lastBlockNum = parseInt(this.actualDataset[0].data[this.actualDataset[0].data.length-1].x)
+    console.log('uppppda.edd', lastBlockNum)
     this.updated.set(lastBlockNum)
   }
 

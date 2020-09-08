@@ -56,15 +56,6 @@ func (g *GasTracker) Main() error {
 				continue
 			}
 
-			// Suggested gas price
-			suggestedGasPrice := g.ETHGasGauge.WaitSuggestedGasPrice()
-			if suggestedGasPrice.BlockNum != nil {
-				g.Suggested = append(g.Suggested, suggestedGasPrice)
-				if len(g.Suggested) > NumDataPoints {
-					g.Suggested = g.Suggested[1:]
-				}
-			}
-
 			// Actual -- stats
 			gasPrices := []uint64{}
 			for _, txn := range txns {
@@ -94,6 +85,15 @@ func (g *GasTracker) Main() error {
 				g.blockNums = g.blockNums[1:]
 			}
 			g.PriceHistory[latest.Block.NumberU64()] = gasPrices
+
+			// Suggested gas price
+			suggestedGasPrice := g.ETHGasGauge.WaitSuggestedGasPrice()
+			if suggestedGasPrice.BlockNum != nil {
+				g.Suggested = append(g.Suggested, suggestedGasPrice)
+				if len(g.Suggested) > NumDataPoints {
+					g.Suggested = g.Suggested[1:]
+				}
+			}
 
 		case <-sub.Done():
 			return nil
