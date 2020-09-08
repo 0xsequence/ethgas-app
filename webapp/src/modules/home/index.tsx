@@ -63,7 +63,7 @@ export const HomeRoute = () => {
         // width: '80%',
         height: '400px'
       }}>
-        <LineChart data={dataStore.chartData()} />
+        <LineChart mode={dataStore.mode.get()} data={dataStore.chartData()} />
       </Box>
 
       {/* <Box sx={{

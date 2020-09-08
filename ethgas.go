@@ -46,6 +46,10 @@ func New(cfg *config.Config) (*ETHGas, error) {
 
 	cfg.GitCommit = GITCOMMIT
 
+	// Server ctx
+	serverCtx := NewContext()
+	serverCtx.Config = cfg
+
 	//
 	// Logging
 	//
@@ -121,6 +125,7 @@ func New(cfg *config.Config) (*ETHGas, error) {
 	}
 
 	return &ETHGas{
+		ctx:         serverCtx,
 		Config:      cfg,
 		Logger:      logger,
 		RPCService:  rpcService,

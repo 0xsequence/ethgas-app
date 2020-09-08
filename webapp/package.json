@@ -19,7 +19,6 @@
     "fix": "yarn lint:fix && yarn format"
   },
   "dependencies": {
-    "@nivo/bar": "^0.62.0",
     "@nivo/line": "^0.62.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.1",

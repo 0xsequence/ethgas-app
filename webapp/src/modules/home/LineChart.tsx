@@ -1,10 +1,18 @@
 import React from 'react'
 import { ResponsiveLine } from '@nivo/line'
+import { DataMode } from '~/stores/DataStore'
 
-export const LineChart = ({ data }) => {
+export const LineChart = ({ mode, data }) => {
   const xValues: string[] = []
   for (let i=data[0].data.length-1; i > 0; i-=2) {
     xValues.push(data[0].data[i].x)
+  }
+
+  let yLabel = ''
+  if (mode === DataMode.ACTUAL) {
+    yLabel = 'gas price paid (gwei)'
+  } else {
+    yLabel = 'suggested gas price (gwei)'
   }
 
   return (
@@ -36,7 +44,7 @@ export const LineChart = ({ data }) => {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'suggested gas price (gwei)',
+        legend: yLabel,
         legendOffset: -50,
         legendPosition: 'middle',
       }}

@@ -66,8 +66,6 @@ const sharedConfig = {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
       // '~': path.join(process.cwd(), 'src'),
-      // '~chain': path.join(process.cwd(), '../chain'),
-      // '~game': path.join(process.cwd(), '../game/src')
     },
     plugins: [new TsconfigPathsPlugin()]
   }
