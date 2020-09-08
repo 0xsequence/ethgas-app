@@ -38,6 +38,9 @@ RUN yarn install && yarn dist
 #
 FROM nginx:stable-alpine
 
+COPY --from=builder /build/dist /usr/share/nginx/html
+COPY --from=builder /build/config/*.json /etc/
+
 RUN echo $'#!/bin/sh\n\
 \n\
 if [[ -z "$DIST" ]]; then\n\
@@ -61,9 +64,6 @@ fi\n\
 '\ > /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
-
-COPY --from=builder /build/dist /usr/share/nginx/html
-COPY --from=builder /build/config/*.json /etc/
 
 EXPOSE 80
 
