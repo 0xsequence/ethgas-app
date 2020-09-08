@@ -206,7 +206,6 @@ export class DataStore {
 
     // will trigger a re-render as it updates the set value
     const lastBlockNum = parseInt(this.actualDataset[0].data[this.actualDataset[0].data.length-1].x)
-    console.log('uppppda.edd', lastBlockNum)
     this.updated.set(lastBlockNum)
   }
 

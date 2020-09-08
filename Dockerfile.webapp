@@ -1,0 +1,70 @@
+#
+# Builder pre-image
+#
+FROM node:12-buster as builder
+
+# Setup node
+RUN apt-get update && \
+	  apt-get install -y \
+		ca-certificates \
+		curl \
+		gcc \
+		git \
+		libc6-dev \
+		libcairo-dev \
+		libjpeg62-turbo-dev \
+		libpango1.0-dev \
+		libpixman-1-dev \
+		libusb-dev \
+		python \
+		ssh-client \
+		unzip \
+		--no-install-recommends && \
+	  rm -rf /var/lib/apt/lists/*
+
+# install lerna
+RUN npm config set unsafe-perm true && \
+    npm install -g lerna && \
+    npm config set unsafe-perm false
+
+
+COPY ./webapp /build
+WORKDIR /build
+RUN yarn install && yarn dist
+
+
+#
+# Dist image
+#
+FROM nginx:stable-alpine
+
+RUN echo $'#!/bin/sh\n\
+\n\
+if [[ -z "$DIST" ]]; then\n\
+  export DIST=dist;\n\
+fi\n\
+\n\
+APP_CONFIG=`cat /etc/webapp.${DIST}.json | tr "\n" " "`\n\
+\n\
+if [[ -z "${APP_CONFIG}" ]]; then\n\
+  echo "config file is empty, exiting.."\n\
+  exit 0\n\
+fi\n\
+\n\
+sed -i \'s|\/\*APP_CONFIG>>\*\/{}\/\*<<APP_CONFIG\*\/|\'"$APP_CONFIG"\'|g\' /usr/share/nginx/html/index.html\n\
+\n\
+if [[ -z "$@" ]]; then\n\
+  /usr/sbin/nginx -g "daemon off;"\n\
+else\n\
+  exec "$@"\n\
+fi\n\
+'\ > /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+COPY --from=builder /build/dist /usr/share/nginx/html
+COPY --from=builder /build/config/*.json /etc/
+
+EXPOSE 80
+
+ENTRYPOINT ["/entrypoint.sh"]

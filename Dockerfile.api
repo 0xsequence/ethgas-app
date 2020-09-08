@@ -1,0 +1,48 @@
+#
+# Builder pre-image
+#
+FROM golang:1.15-alpine as builder
+
+# Setup for go
+RUN apk add --no-cache \
+      bash \
+      build-base \
+      ca-certificates \
+      curl \
+      gcc \
+      git \
+      libusb \
+      linux-headers \
+      openssl \
+      openssh-client \
+      make \
+      musl-dev \
+      postgresql-client \
+      unzip
+
+ARG GITBRANCH=""
+ARG GITCOMMIT=""
+ARG GITCOMMITDATE=""
+ARG VERSION=""
+
+COPY . /build
+WORKDIR /build
+RUN make build
+
+
+#
+# Dist image
+#
+FROM alpine:3.12
+
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /ethgas-app
+
+COPY --from=builder /build/bin /ethgas-app
+
+EXPOSE 4444
+
+ENV CONFIG_FILE /etc/ethgas.conf
+
+CMD ["/ethgas-app/ethgas", "--config", "/etc/ethgas.conf"]

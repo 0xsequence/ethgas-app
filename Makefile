@@ -149,3 +149,11 @@ clang-format-check:
 	@which clang-format 2>/dev/null || echo "Get clang-format https://clang.llvm.org/docs/ClangFormat.html"
 	@clang-format -i -style=LLVM $(shell find . -type f -name '*.proto' -not -path "./vendor/*")
 
+##
+## Docker
+##
+docker-build-api:
+	docker build -f Dockerfile.api -t ethgas/api .
+
+docker-build-webapp:
+	docker build -f Dockerfile.webapp -t ethgas/webapp .
