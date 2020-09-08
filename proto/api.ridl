@@ -32,3 +32,4 @@ service ETHGas
 
   - AllSuggestedGasPrices(count?: uint) => (suggestedGasPrices: []SuggestedGasPrice)
   - AllGasStats(count?: uint) => (gasStats: []GasStat)
+  - GasPriceHistory() => (gasPriceHistory: map<uint64,[]uint64>)

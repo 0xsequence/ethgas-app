@@ -1,13 +1,12 @@
 import React from 'react'
-import { backgroundColor } from 'styled-system'
 import { Styled, Box, Flex, Text } from '~/style'
-import { BarChart, barData } from './BarChart'
 import { LineChart } from './LineChart'
 import { Switcher } from '~/style'
 import { useStore, DataStore } from '~/stores'
+import { DataMode } from '~/stores/DataStore'
 
 export const HomeRoute = () => {
-  const dataStore = useStore<DataStore>('data') //, null)
+  const dataStore = useStore<DataStore>('data')
 
   return (
     <Box
@@ -24,19 +23,37 @@ export const HomeRoute = () => {
         textAlign: 'center',
         py: 4
       }}>
-        Ethereum Gas Price Tracker
+        Ethereum Gas Price Gauge
       </Box>
 
       <Flex type='centered-row' sx={{ mt: 2, mb: 3 }}>
-        <Switcher option1={{value: '1', label: "Suggested"}} option2={{value: '2', label: "Actual"}} onChange={() => {}} />
+        <Switcher
+          option1={{value: DataMode.SUGGESTED, label: "Suggested"}}
+          option2={{value: DataMode.ACTUAL, label: "Actual"}}
+          onChange={(v: DataMode) => dataStore.mode.set(v)}
+        />
       </Flex>
 
       <Flex type='centered-row' sx={{
         flexWrap: 'nowrap'
       }}>
-        <GasStat label={"Fast"} gasPrice={dataStore.suggestedFast.get()} usdPrice={'0.25'} bgColor={'red'} />
-        <GasStat label={"Standard"} gasPrice={dataStore.suggestedStandard.get()} usdPrice={'0.10'} bgColor={'green'} />
-        <GasStat label={"Slow"} gasPrice={dataStore.suggestedSlow.get()} usdPrice={'0.05'} bgColor={'yellow'} />
+
+        {dataStore.mode.get() === DataMode.SUGGESTED && 
+          <>
+            <GasStat label={"Fast"} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} />
+            <GasStat label={"Standard"} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} />
+            <GasStat label={"Slow"} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} />
+          </>
+        }
+
+        {dataStore.mode.get() === DataMode.ACTUAL && 
+          <>
+            <GasStat label={"Max"} gasPrice={dataStore.actualMax.get()} bgColor={'red'} />
+            <GasStat label={"Average"} gasPrice={dataStore.actualAverage.get()} bgColor={'green'} />
+            <GasStat label={"Min"} gasPrice={dataStore.actualMin.get()} bgColor={'yellow'} />
+          </>
+        }
+
       </Flex>
 
       <Box sx={{
@@ -46,7 +63,7 @@ export const HomeRoute = () => {
         // width: '80%',
         height: '400px'
       }}>
-        <LineChart data={dataStore.suggestedDataset} />
+        <LineChart data={dataStore.chartData()} />
       </Box>
 
       {/* <Box sx={{
@@ -120,57 +137,3 @@ const GasStat = ({
     </Box>
   )
 }
-
-// const TabBar = () => {
-//   return (
-//     <Flex type='centered-row' sx={{
-//       // mx: 'auto',
-//       mt: 4,
-//       mb: 0,
-//       color: 'black',
-//       borderRadius: '20px',
-//       border: '2px solid #ff',
-//       fontSize: 1,
-//       fontWeight: 'bold',
-//       // backgroundColor: '#E5E5E5',
-//     }}>
-//       {/* <Box sx={{
-//         backgroundColor: '#E5E5E5',
-//         borderRadius: '24px',
-//         border: '2px solid #fff',
-//         p: '8px',
-//         // flexShrink: 1,
-//         // width: '300px'
-//         fontSize: 1,
-//         fontWeight: 'bold',
-//       }}> */}
-//         <Box sx={{
-//           // width: '120px'
-//           px: 2,
-//           py: 2,
-//           flexBasis: '175px',
-//           // border: '1px solid red',
-//           borderRadius: '20px',
-//           textAlign: 'center',
-//           backgroundColor: '#666',
-//           color: 'white',
-//           zIndex: 100
-//         }}>Suggested</Box>
-
-//         <Box sx={{
-//           // width: '1200px'
-//           px: 2,
-//           py: 2,
-//           flexBasis: '175px',
-//           // border: '1px solid red',
-//           borderRadius: '20px',
-//           textAlign: 'center',
-//           ml: '-40px',
-//           backgroundColor: '#E5E5E5'
-//         }}>Actual</Box>
-
-//       {/* </Box> */}
-
-//     </Flex>
-//   )
-// }

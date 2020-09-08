@@ -13,20 +13,22 @@ type GasTracker struct {
 	Logger      zerolog.Logger
 	ETHGasGauge *ethgas.GasGauge
 
-	// PriceHistory map[uint64][]uint64
-	Suggested []ethgas.SuggestedGasPrice
-	Actual    []GasPriceStat
+	PriceHistory map[uint64][]uint64
+	Suggested    []ethgas.SuggestedGasPrice
+	Actual       []GasPriceStat
+	blockNums    []uint64
 }
 
 var NumDataPoints = 100
 
 func NewGasTracker(logger zerolog.Logger, gasGauge *ethgas.GasGauge) (*GasTracker, error) {
 	return &GasTracker{
-		Logger:      logger,
-		ETHGasGauge: gasGauge,
-		// PriceHistory: make(map[uint64][]uint64),
-		Suggested: []ethgas.SuggestedGasPrice{},
-		Actual:    []GasPriceStat{},
+		Logger:       logger,
+		ETHGasGauge:  gasGauge,
+		PriceHistory: make(map[uint64][]uint64),
+		Suggested:    []ethgas.SuggestedGasPrice{},
+		Actual:       []GasPriceStat{},
+		blockNums:    []uint64{},
 	}, nil
 }
 
@@ -77,17 +79,21 @@ func (g *GasTracker) Main() error {
 				return gasPrices[i] < gasPrices[j]
 			})
 
-			gasStats := calcStats(gasPrices)
-			gasStats.BlockNum = latest.Block.Number()
-			gasStats.BlockTime = latest.Block.Time()
-			g.Actual = append(g.Actual)
+			gasStat := calcStat(gasPrices)
+			gasStat.BlockNum = latest.Block.Number()
+			gasStat.BlockTime = latest.Block.Time()
+			g.Actual = append(g.Actual, gasStat)
 			if len(g.Actual) > NumDataPoints {
 				g.Actual = g.Actual[1:]
 			}
 
 			// Record raw txn gas prices
-			// TODO: truncate up to certain amount
-			// g.PriceHistory[latest.Block.NumberU64()] = gasPrices
+			g.blockNums = append(g.blockNums, latest.Block.NumberU64())
+			if len(g.blockNums) > NumDataPoints {
+				delete(g.PriceHistory, g.blockNums[0])
+				g.blockNums = g.blockNums[1:]
+			}
+			g.PriceHistory[latest.Block.NumberU64()] = gasPrices
 
 		case <-sub.Done():
 			return nil
@@ -106,7 +112,7 @@ type GasPriceStat struct {
 	BlockTime uint64   `json:"blockTime"`
 }
 
-func calcStats(prices []uint64) GasPriceStat {
+func calcStat(prices []uint64) GasPriceStat {
 	if len(prices) == 0 {
 		return GasPriceStat{}
 	}

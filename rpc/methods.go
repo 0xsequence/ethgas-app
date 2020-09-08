@@ -32,16 +32,16 @@ func (s *RPC) AllSuggestedGasPrices(ctx context.Context, count *uint) ([]*proto.
 		return nil, proto.Errorf(proto.ErrAborted, "suggested price hasn't been computed yet")
 	}
 
-	c := uint(tracker.NumDataPoints)
+	c := tracker.NumDataPoints
 	if count != nil && int(*count) > 0 && int(*count) < tracker.NumDataPoints {
-		c = *count
+		c = int(*count)
+	}
+	if len(data) > c {
+		data = data[len(data)-c:]
 	}
 
 	resp := []*proto.SuggestedGasPrice{}
-	for i, v := range data {
-		if uint(i) >= c {
-			break
-		}
+	for _, v := range data {
 		d := &proto.SuggestedGasPrice{
 			BlockNum:  v.BlockNum.Uint64(),
 			BlockTime: v.BlockTime,
@@ -59,19 +59,19 @@ func (s *RPC) AllSuggestedGasPrices(ctx context.Context, count *uint) ([]*proto.
 func (s *RPC) AllGasStats(ctx context.Context, count *uint) ([]*proto.GasStat, error) {
 	data := s.GasTracker.Actual
 	if len(data) == 0 {
-		return nil, proto.Errorf(proto.ErrAborted, "suggested price hasn't been computed yet")
+		return nil, proto.Errorf(proto.ErrAborted, "awaiting incoming block data")
 	}
 
-	c := uint(tracker.NumDataPoints)
+	c := tracker.NumDataPoints
 	if count != nil && int(*count) > 0 && int(*count) < tracker.NumDataPoints {
-		c = *count
+		c = int(*count)
+	}
+	if len(data) > c {
+		data = data[len(data)-c:]
 	}
 
 	resp := []*proto.GasStat{}
-	for i, v := range data {
-		if uint(i) >= c {
-			break
-		}
+	for _, v := range data {
 		d := &proto.GasStat{
 			BlockNum:  v.BlockNum.Uint64(),
 			BlockTime: v.BlockTime,
@@ -83,4 +83,8 @@ func (s *RPC) AllGasStats(ctx context.Context, count *uint) ([]*proto.GasStat, e
 	}
 
 	return resp, nil
+}
+
+func (s *RPC) GasPriceHistory(ctx context.Context) (map[uint64][]uint64, error) {
+	return s.GasTracker.PriceHistory, nil
 }
