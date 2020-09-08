@@ -50,6 +50,9 @@ func (g *GasTracker) Main() error {
 		select {
 		case blocks := <-sub.Blocks():
 			latest := blocks.LatestBlock()
+			if latest == nil {
+				continue
+			}
 
 			txns := latest.Transactions()
 			if len(txns) == 0 {
