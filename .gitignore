@@ -1,4 +1,4 @@
-api/bin/*
+api/bin
 etc/ethgas.conf
 *.tmp
 .vscode

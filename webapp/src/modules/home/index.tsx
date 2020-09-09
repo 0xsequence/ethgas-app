@@ -21,7 +21,8 @@ export const HomeRoute = () => {
         fontSize: 4,
         fontWeight:'heading',
         textAlign: 'center',
-        py: 4
+        pt: [1, 1, 4],
+        pb: [2, 2, 4]
       }}>
         Ethereum Gas Price Gauge
       </Box>
@@ -35,7 +36,8 @@ export const HomeRoute = () => {
       </Flex>
 
       <Flex type='centered-row' sx={{
-        flexWrap: 'nowrap'
+        flexWrap: 'nowrap',
+        m: 1
       }}>
 
         {dataStore.mode.get() === DataMode.SUGGESTED && 
@@ -117,8 +119,10 @@ const GasStat = ({
         border: '2px solid #666',
         borderRadius: '10px',
         backgroundColor: bgColor,
-        m: 2,
-        p: 3,
+        m: [1, 1, 2],
+        p: [1, 1, 3],
+        // m: 2,
+        // p: 3,
         textAlign: 'center',
         verticalAlign: 'middle',
       }}

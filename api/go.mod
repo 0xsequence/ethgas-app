@@ -11,6 +11,7 @@ require (
 	github.com/go-chi/cors v1.1.1
 	github.com/go-chi/httplog v0.1.6
 	github.com/go-chi/httpvcr v0.1.0 // indirect
+	github.com/go-chi/stampede v0.4.4
 	github.com/goware/modvendor v0.3.0
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/mattn/go-zglob v0.0.3 // indirect

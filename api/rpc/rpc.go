@@ -3,6 +3,7 @@ package rpc
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/arcadeum/ethgas-app/config"
 	"github.com/arcadeum/ethgas-app/proto"
@@ -14,6 +15,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/httplog"
+	"github.com/go-chi/stampede"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -61,6 +63,8 @@ func (s *RPC) Start() error {
 		MaxAge:           600,
 	})
 	r.Use(c.Handler)
+
+	r.Use(stampede.Handler(512, 1500*time.Millisecond))
 
 	r.HandleFunc("/", indexHandler)
 

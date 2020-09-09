@@ -100,6 +100,10 @@ github.com/go-chi/cors
 github.com/go-chi/httplog
 # github.com/go-chi/httpvcr v0.1.0
 ## explicit
+# github.com/go-chi/stampede v0.4.4
+## explicit
+github.com/go-chi/stampede
+github.com/go-chi/stampede/singleflight
 # github.com/go-stack/stack v1.8.0
 github.com/go-stack/stack
 # github.com/golang/protobuf v1.3.2
@@ -116,7 +120,7 @@ github.com/gorilla/websocket
 github.com/goware/modvendor
 # github.com/goware/statik v0.2.0
 github.com/goware/statik/fs
-# github.com/hashicorp/golang-lru v0.5.4
+# github.com/hashicorp/golang-lru v0.5.5-0.20200511160909-eb529947af53
 github.com/hashicorp/golang-lru
 github.com/hashicorp/golang-lru/simplelru
 # github.com/huin/goupnp v1.0.0

@@ -6,7 +6,7 @@ export enum DataMode {
   ACTUAL = 'ACTUAL'
 }
 
-export const MaxNumDataPoints = 80
+export const MaxNumDataPoints = 70
 
 export class DataStore {
   mode = observable<DataMode>(DataMode.SUGGESTED)
@@ -48,7 +48,7 @@ export class DataStore {
   async pollSuggested() {
     const api = this.root.api
 
-    let count = 100
+    let count = MaxNumDataPoints
     if (this.lastSuggestedPoll > 0) {
       count = 5
     }
@@ -76,7 +76,7 @@ export class DataStore {
   async pollActual() {
     const api = this.root.api
 
-    let count = 100
+    let count = MaxNumDataPoints
     if (this.lastActualPoll > 0) {
       count = 5
     }
