@@ -36,13 +36,17 @@ export class DataStore {
   updated = observable<number>(0)
 
   constructor(private root: RootStore) {
-    this.pollSuggested()
-    this.pollActual()
-
-    setInterval(() => {
+    const poll = () => {
       this.pollSuggested()
       this.pollActual()
-    }, 1500)
+  
+
+      // will trigger a re-render as it updates the set value
+      this.updated.set(this.lastSuggestedPoll)
+    }
+
+    poll()
+    setInterval(() => poll(), 1500)
   }
 
   async pollSuggested() {
@@ -151,8 +155,8 @@ export class DataStore {
     }
 
     // will trigger a re-render as it updates the set value
-    const lastBlockNum = parseInt(this.suggestedDataset[0].data[this.suggestedDataset[0].data.length-1].x)
-    this.updated.set(lastBlockNum)
+    // const lastBlockNum = parseInt(this.suggestedDataset[0].data[this.suggestedDataset[0].data.length-1].x)
+    // this.updated.set(lastBlockNum)
   }
 
   updateActualDataset(data: GasStat[]) {
@@ -205,8 +209,8 @@ export class DataStore {
     }
 
     // will trigger a re-render as it updates the set value
-    const lastBlockNum = parseInt(this.actualDataset[0].data[this.actualDataset[0].data.length-1].x)
-    this.updated.set(lastBlockNum)
+    // const lastBlockNum = parseInt(this.actualDataset[0].data[this.actualDataset[0].data.length-1].x)
+    // this.updated.set(lastBlockNum)
   }
 
   chartData() {
