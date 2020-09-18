@@ -7,7 +7,7 @@ github.com/VictoriaMetrics/fastcache
 ## explicit
 github.com/VojtechVitek/rerun
 github.com/VojtechVitek/rerun/cmd/rerun
-# github.com/arcadeum/ethkit v1.1.4-0.20200907222217-9c65a18c16f0
+# github.com/arcadeum/ethkit v1.1.4
 ## explicit
 github.com/arcadeum/ethkit/ethgas
 github.com/arcadeum/ethkit/ethmonitor

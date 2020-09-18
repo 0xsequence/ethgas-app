@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/VojtechVitek/rerun v0.0.2
-	github.com/arcadeum/ethkit v1.1.4-0.20200907222217-9c65a18c16f0
+	github.com/arcadeum/ethkit v1.1.4
 	github.com/ethereum/go-ethereum v1.9.10 // indirect
 	github.com/go-chi/chi v4.1.3-0.20200708122843-cf97bef8b140+incompatible
 	github.com/go-chi/cors v1.1.1
