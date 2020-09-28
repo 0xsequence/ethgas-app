@@ -106,18 +106,18 @@ module.exports = {
             ],
             require.resolve('@babel/plugin-transform-runtime'),
 
-            [require.resolve('@emotion/babel-plugin'), {
-              importMap: {
-                "ethgas-app": {
-                  "style": {
-                    "canonicalImport": ["@emotion/styled", "default"],
-                  },
-                  "style": {
-                    "canonicalImport": ["@emotion/core", "css"]
-                  }
-                }
-              }
-            }]
+            // [require.resolve('@emotion/babel-plugin'), {
+            //   importMap: {
+            //     "ethgas-app": {
+            //       "style": {
+            //         "canonicalImport": ["@emotion/styled", "default"],
+            //       },
+            //       "style": {
+            //         "canonicalImport": ["@emotion/core", "css"]
+            //       }
+            //     }
+            //   }
+            // }]
           ],
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/

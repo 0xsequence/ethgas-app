@@ -45,8 +45,9 @@ export class DataStore {
       this.updated.set(this.lastSuggestedPoll)
     }
 
-    poll()
-    setInterval(() => poll(), 1500)
+    // NOTE: disabled polling for now
+    // poll()
+    // setInterval(() => poll(), 1500)
   }
 
   async pollSuggested() {

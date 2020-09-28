@@ -166,9 +166,10 @@ const Comp = styled.div`
 `
 
 const Nest = styled.div`
-  :hover {
-    ${Comp} {
-      visibility: visible;
-    }
-  }
 `
+// NOTE: move the following code into the styled.div`` above to use the component selector
+// :hover {
+//   ${Comp} {
+//     visibility: visible;
+//   }
+// }
