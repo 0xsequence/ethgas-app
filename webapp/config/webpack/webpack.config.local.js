@@ -90,10 +90,15 @@ module.exports = {
         options: {
           customize: require.resolve('babel-preset-react-app/webpack-overrides'),
           presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+
           plugins: [
+
             require.resolve('@babel/plugin-syntax-dynamic-import'),
+
             [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
+
             [require.resolve('@babel/plugin-proposal-class-properties'), { loose: true }],
+
             [
               require.resolve('babel-plugin-named-asset-import'),
               {
@@ -104,20 +109,22 @@ module.exports = {
                 },
               },
             ],
+
             require.resolve('@babel/plugin-transform-runtime'),
 
-            // [require.resolve('@emotion/babel-plugin'), {
-            //   importMap: {
-            //     "ethgas-app": {
-            //       "style": {
-            //         "canonicalImport": ["@emotion/styled", "default"],
-            //       },
-            //       "style": {
-            //         "canonicalImport": ["@emotion/core", "css"]
-            //       }
-            //     }
-            //   }
-            // }]
+            [require.resolve('@emotion/babel-plugin'), {
+              importMap: {
+                "~/style": {
+                  "styled": {
+                    "canonicalImport": ["@emotion/styled", "default"],
+                  },
+                  "css": {
+                    "canonicalImport": ["@emotion/react", "css"]
+                  }
+                }
+              }
+            }]
+
           ],
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
