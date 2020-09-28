@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es5",
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
@@ -22,7 +22,8 @@
     "noErrorTruncation": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": false,
+    "isolatedModules": true,
+    "allowJs": true,
     "checkJs": false,
     "baseUrl": "./",
     "rootDir": "./src",
@@ -33,11 +34,11 @@
       "name": "typescript-styled-plugin"
     }],
     "paths": {
-      "~/*": ["src/*"],
-      "#/*": ["src/components/*"]
+      "~/*": ["./src/*"],
+      "#/*": ["./src/components/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist", "build"],
   "files": [
     "typings/import-images.d.ts"
