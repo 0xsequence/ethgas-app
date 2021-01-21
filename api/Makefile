@@ -81,7 +81,7 @@ define build
 	  $(MOD_VENDOR) \
 		-tags='$(BUILDTAGS)' \
 		-gcflags='-e' \
-		-ldflags='-X "github.com/arcadeum/ethgas-app.VERSION=$(VERSION)" -X "github.com/arcadeum/ethgas-app.GITBRANCH=$(GITBRANCH)" -X "github.com/arcadeum/ethgas-app.GITCOMMIT=$(GITCOMMIT)" -X "github.com/arcadeum/ethgas-app.GITCOMMITDATE=$(GITCOMMITDATE)" -X "github.com/arcadeum/ethgas-app.GITCOMMITAUTHOR=$(GITCOMMITAUTHOR)"' \
+		-ldflags='-X "github.com/0xsequence/ethgas-app.VERSION=$(VERSION)" -X "github.com/0xsequence/ethgas-app.GITBRANCH=$(GITBRANCH)" -X "github.com/0xsequence/ethgas-app.GITCOMMIT=$(GITCOMMIT)" -X "github.com/0xsequence/ethgas-app.GITCOMMITDATE=$(GITCOMMITDATE)" -X "github.com/0xsequence/ethgas-app.GITCOMMITAUTHOR=$(GITCOMMITAUTHOR)"' \
 		$(1)
 endef
 
@@ -96,7 +96,7 @@ build-pkgs:
 	  $(MOD_VENDOR) \
 		-tags='$(BUILDTAGS)' \
 		-gcflags='-e' \
-		-ldflags='-X "github.com/arcadeum/ethgas-app.VERSION=$(VERSION)" -X "github.com/arcadeum/ethgas-app.GITBRANCH=$(GITBRANCH)" -X "github.com/arcadeum/ethgas-app.GITCOMMIT=$(GITCOMMIT)" -X "github.com/arcadeum/ethgas-app.GITCOMMITDATE=$(GITCOMMITDATE)" -X "github.com/arcadeum/ethgas-app.GITCOMMITAUTHOR=$(GITCOMMITAUTHOR)"' \
+		-ldflags='-X "github.com/0xsequence/ethgas-app.VERSION=$(VERSION)" -X "github.com/0xsequence/ethgas-app.GITBRANCH=$(GITBRANCH)" -X "github.com/0xsequence/ethgas-app.GITCOMMIT=$(GITCOMMIT)" -X "github.com/0xsequence/ethgas-app.GITCOMMITDATE=$(GITCOMMITDATE)" -X "github.com/0xsequence/ethgas-app.GITCOMMITAUTHOR=$(GITCOMMITAUTHOR)"' \
 		./...
 
 generate:

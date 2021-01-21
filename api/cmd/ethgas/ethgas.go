@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/arcadeum/ethgas-app"
+	"github.com/0xsequence/ethgas-app"
 )
 
 func ethgasMain() error {

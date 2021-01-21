@@ -1,6 +1,6 @@
 <img alt="webrpc" src="https://github.com/webrpc/webrpc/raw/master/webrpc.png" width="1024" />
 
-webrpc is a design/schema-driven approach to writing backend servers for the Web. Write your server's
+webrpc is a schema-driven approach to writing backend servers for the Web. Write your server's
 api interface in a schema format of [RIDL](./_examples/golang-basics/example.ridl) or [JSON](./_examples/golang-basics/example.webrpc.json),
 and then run `webrpc-gen` to generate the networking source code for your server and client apps. From the schema,
 webrpc-gen will generate application base class types/interfaces, JSON encoders, and networking code. In doing
@@ -91,8 +91,8 @@ you can use the `webrpc-gen` cli to generate source code for:
 webrpc services speak JSON, as our goals are to build services that communicate with webapps.
 We optimize for developer experience, ease of use and productivity when building backends
 for modern webapps. However, webrpc also works great for service<->service communication,
-but it won't be as fast as gRPC in that scenario, but I'd be surprised hear, for majority cases
-of cases, for this to be a bottleneck or costly tradeoff.
+but it won't be as fast as gRPC in that scenario, but I'd be surprised to hear if for the majority
+of cases that this would be a bottleneck or costly tradeoff.
 
 webrpc is heavily inspired by gRPC and Twirp. It is architecturally the same and has a similar
 workflow, but simpler. In fact, the webrpc schema is similar in design to protobuf, as
@@ -125,13 +125,13 @@ to RPC services. Picture the flow of data when a client calls out to a server --
 runtime proxy-object, we encode that object, send it over the wire, the server decodes it into
 a server runtime proxy-object, the server handler queries the db, returns a proxy object,
 encodes it, and sends the function return data over the wire again. That is a ton of work,
-especially if you have to write it by hand and then maintain robust code in both namespaces --
-aka REST. But, I just want to call a function on my server! Save yourself the work and time,
-and code-generate it instead - Enter gRPC / Twirp .. and now, webrpc :) 
+especially if you have to write it by hand and then maintain robust code in both the client and
+the server. Ahh, I just want to call a function on my server from my app! Save yourself the work
+and time, and code-generate it instead - Enter gRPC / Twirp .. and now, webrpc :) 
 
 
 Future goals/work:
-1. Add RPC streaming support for client/server via websockets
+1. Add RPC streaming support for client/server
 2. More code generators.. for Rust, Python, ..
 
 
@@ -206,7 +206,7 @@ for code-generating the bindings between client and server from a common IDL.
 
 ## We're hiring!
 
-Our team at https://horizongames.net is building [Arcadeum.net](https://arcadeum.net), a distributed
+Our team at https://horizon.io is building [Arcadeum.net](https://arcadeum.net), a distributed
 network and platform for blockchain based video games :) built for Ethereum.
 
 If you're passionate about distributed systems, cryptography, privacy, and

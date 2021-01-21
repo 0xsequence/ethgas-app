@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"runtime/pprof"
 
-	"github.com/arcadeum/ethgas-app/config"
+	"github.com/0xsequence/ethgas-app/config"
 	"github.com/spf13/cobra"
 )
 

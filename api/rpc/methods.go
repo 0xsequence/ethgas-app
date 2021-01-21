@@ -3,8 +3,8 @@ package rpc
 import (
 	"context"
 
-	"github.com/arcadeum/ethgas-app/proto"
-	"github.com/arcadeum/ethgas-app/tracker"
+	"github.com/0xsequence/ethgas-app/proto"
+	"github.com/0xsequence/ethgas-app/tracker"
 )
 
 func (s *RPC) SuggestedGasPrice(ctx context.Context) (*proto.SuggestedGasPrice, error) {

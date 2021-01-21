@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"sort"
 
-	"github.com/arcadeum/ethkit/ethgas"
+	"github.com/0xsequence/ethkit/ethgas"
 	"github.com/rs/zerolog"
 )
 
