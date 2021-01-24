@@ -1,9 +1,10 @@
 import React from 'react'
-import { Styled, Box, Flex, Text } from '~/style'
+import { Styled, Box, Flex, Text, styled, css } from '~/style'
 import { LineChart } from './LineChart'
 import { Switcher } from '~/style'
 import { useStore, DataStore } from '~/stores'
 import { DataMode } from '~/stores/DataStore'
+import { Redirect } from 'react-router'
 
 export const HomeRoute = () => {
   const dataStore = useStore<DataStore>('data')
@@ -25,6 +26,12 @@ export const HomeRoute = () => {
         pb: [2, 2, 4]
       }}>
         Ethereum Gas Price Gauge
+      </Box>
+
+      <Box>
+        testing..
+        <Another>yes</Another>
+        <Nest>yes2</Nest>
       </Box>
 
       <Flex type='centered-row' sx={{ mt: 2, mb: 3 }}>
@@ -141,3 +148,28 @@ const GasStat = ({
     </Box>
   )
 }
+
+const SomeStyle = css({
+  color: 'yellow',
+  backgroundColor: 'red'
+})
+  // color: yellow;
+// `
+
+const Another = styled.a`
+  ${SomeStyle}
+`
+
+const Comp = styled.div`
+  width: 100px;
+  background-color: purple;
+`
+
+const Nest = styled.div`
+  :hover {
+    ${Comp} {
+      visibility: visible;
+    }
+  }
+`
+// NOTE: move the following code into the styled.div`` above to use the component selector

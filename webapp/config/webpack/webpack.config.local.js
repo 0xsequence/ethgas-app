@@ -6,6 +6,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const paths = require('./paths')
 
 let dist = process.env.DIST
 if (!dist || dist === '') {
@@ -83,17 +84,59 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.tsx?$/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true
-            }
-          }
-        ],
-        exclude: path.resolve(process.cwd(), 'node_modules'),
+        test: /\.(js|mjs|jsx|ts|tsx)$/,
+        include: [paths.appSrc],
+        loader: require.resolve('babel-loader'),
+        options: {
+          customize: require.resolve('babel-preset-react-app/webpack-overrides'),
+          presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+
+          plugins: [
+
+            require.resolve('@babel/plugin-syntax-dynamic-import'),
+
+            [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
+
+            [require.resolve('@babel/plugin-proposal-class-properties'), { loose: true }],
+
+            [
+              require.resolve('babel-plugin-named-asset-import'),
+              {
+                loaderMap: {
+                  svg: {
+                    ReactComponent: '@svgr/webpack?-svgo,+titleProp,+ref![path]',
+                  },
+                },
+              },
+            ],
+
+            require.resolve('@babel/plugin-transform-runtime'),
+
+            [require.resolve('@emotion/babel-plugin'), {
+              importMap: {
+                "~/style": {
+                  "styled": {
+                    "canonicalImport": ["@emotion/styled", "default"],
+                  },
+                  "css": {
+                    "canonicalImport": ["@emotion/react", "css"]
+                  }
+                }
+              }
+            }]
+
+          ],
+          // This is a feature of `babel-loader` for webpack (not Babel itself).
+          // It enables caching results in ./node_modules/.cache/babel-loader/
+          // directory for faster rebuilds.
+          // cacheDirectory: true,
+          // See #6846 for context on why cacheCompression is disabled
+          cacheCompression: false,
+          compact: false,
+        },
       },
+
+
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
