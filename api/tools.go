@@ -14,14 +14,14 @@ package tools
 //
 // For instance, if you want to use the `rerun` CLI, previously you'd
 // use it from your global system with `rerun <args>`. Now, you should run it
-// via: `go run github.com/VojtechVitek/rerun/cmd/rerun <args>`.
+// via: `go run github.com/goware/rerun/cmd/rerun <args>`.
 //
 // This is considered best practice in the Go space. For more info on this
 // technique see https://gist.github.com/tschaub/66f5feb20ae1b5166e9fe928c5cba5e4
 
 import (
-	_ "github.com/VojtechVitek/rerun/cmd/rerun"
 	_ "github.com/goware/modvendor"
+	_ "github.com/goware/rerun/cmd/rerun"
 	_ "github.com/webrpc/webrpc/cmd/webrpc-gen"
 	_ "golang.org/x/tools/cmd/goimports"
 )
