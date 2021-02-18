@@ -166,6 +166,8 @@ github.com/goware/modvendor v0.3.0 h1:pQoHt7SOUiWSwN/W5FzibTQLx/1Xa3VMBRcZGtdb1w
 github.com/goware/modvendor v0.3.0/go.mod h1:rtogeSlPLJT6MlypJyGp24o/vnHvF+ebCoTQrDX6oGY=
 github.com/goware/rerun v0.0.3 h1:duhbatJgWIuNO7QBCxrs0Rbg4Ckt3qXaTdIaG+lYozI=
 github.com/goware/rerun v0.0.3/go.mod h1:2XMWAz6KyEA98DAsOSJbaMmvyP8KwKImqe5C3B1ttMM=
+github.com/goware/rerun v0.0.4 h1:qPw4HgDhcDiV8CWc4JQFPkXnWRd+IuowMqOkgQ9pZjs=
+github.com/goware/rerun v0.0.4/go.mod h1:2XMWAz6KyEA98DAsOSJbaMmvyP8KwKImqe5C3B1ttMM=
 github.com/goware/statik v0.2.0 h1:2dKnJIawSr/qbd4TdSgRtNc6mdVZrTOR56aSiL47460=
 github.com/goware/statik v0.2.0/go.mod h1:Fktf+coYRC3SB2RfBB++LAG6ojA/VzuDp0Jfd064ICs=
 github.com/graph-gophers/graphql-go v0.0.0-20191115155744-f33e81362277/go.mod h1:9CQHMSxwO4MprSdzoIEobiHpoLtHm77vfxsvsIN5Vuc=

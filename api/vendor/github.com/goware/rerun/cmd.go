@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"syscall"
 )
 
 type Cmd struct {
@@ -29,9 +28,6 @@ func (c *Cmd) Start() error {
 	cmd.Stderr = os.Stderr
 	cmd.Stdin = os.Stdin
 
-	// NOTE: leaving this commented as it will break certain binaries from even starting.
-	// cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-
 	if err := cmd.Start(); err != nil {
 		return err
 	}
@@ -41,14 +37,7 @@ func (c *Cmd) Start() error {
 }
 
 func (c *Cmd) Kill() error {
-	// Try to kill the whole process group (which we created via Setpgid: true), if possible.
-	// This should kill the command process, all its children and grandchildren.
-	if pgid, err := syscall.Getpgid(c.cmd.Process.Pid); err == nil {
-		_ = syscall.Kill(-pgid, 9)
-	}
-
 	// Kill the process.
-	// Note: The process group kill syscall sometimes fails on Mac OS, so let's just do both.
 	return c.cmd.Process.Kill()
 }
 

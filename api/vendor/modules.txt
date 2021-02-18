@@ -116,7 +116,7 @@ github.com/gorilla/websocket
 # github.com/goware/modvendor v0.3.0
 ## explicit
 github.com/goware/modvendor
-# github.com/goware/rerun v0.0.3
+# github.com/goware/rerun v0.0.4
 ## explicit
 github.com/goware/rerun
 github.com/goware/rerun/cmd/rerun

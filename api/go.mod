@@ -10,7 +10,7 @@ require (
 	github.com/go-chi/httplog v0.1.8
 	github.com/go-chi/stampede v0.4.4
 	github.com/goware/modvendor v0.3.0
-	github.com/goware/rerun v0.0.3
+	github.com/goware/rerun v0.0.4
 	github.com/rs/zerolog v1.20.0
 	github.com/spf13/cobra v1.1.3
 	github.com/webrpc/webrpc v0.6.0
