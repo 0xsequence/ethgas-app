@@ -51,19 +51,19 @@ bootstrap: copy-sample-config
 
 copy-sample-config:
 	for i in ethgas; do \
-		test -f ../etc/$$i.conf || cp ../etc/$$i.conf{.sample,}; \
+		test -f ./etc/$$i.conf || cp ./etc/$$i.conf{.sample,}; \
 	done
 
 define run
 	@go run github.com/goware/rerun/cmd/rerun -watch ./ -ignore vendor bin tests -run \
-		sh -c 'GOGC=off GO111MODULE=$(GOMODULES) go build -o ./bin/$(1) ./cmd/$(1) && ./bin/$(1) --config=../etc/$(1).conf'
+		sh -c 'GOGC=off GO111MODULE=$(GOMODULES) go build -o ./bin/$(1) ./cmd/$(1) && ./bin/$(1) --config=./etc/$(1).conf'
 endef
 
 run:
 	$(call run,ethgas)
 
 test:
-	export CONFIG=$(TOP)/../etc/ethgas.test.conf && \
+	export CONFIG=$(TOP)/etc/ethgas.test.conf && \
 	$(MAKE) -j1 \
 		test-pkgs
 

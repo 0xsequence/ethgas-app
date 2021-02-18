@@ -3,6 +3,8 @@ etc/ethgas.conf
 *.tmp
 .vscode
 
+api/etc/ethgas.conf
+
 webapp/node_modules
 
 # Ignore everything in vendor/, except for certain files.
