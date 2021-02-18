@@ -12,12 +12,12 @@ export class DataStore {
   mode = observable<DataMode>(DataMode.SUGGESTED)
 
   suggestedFast = observable<number>(0)
-  suggestedStandard = observable<number>(0)
+  suggestedNormal = observable<number>(0)
   suggestedSlow = observable<number>(0)
 
   suggestedDataset: any[] = [
     { 'id': 'slow', 'data': [] },
-    { 'id': 'standard', 'data': [] },
+    { 'id': 'normal', 'data': [] },
     { 'id': 'fast', 'data': [] }
   ]
 
@@ -71,7 +71,7 @@ export class DataStore {
     this.lastSuggestedPoll = blockNum
 
     this.suggestedFast.set(suggestedGasPrice.fast)
-    this.suggestedStandard.set(suggestedGasPrice.standard)
+    this.suggestedNormal.set(suggestedGasPrice.normal)
     this.suggestedSlow.set(suggestedGasPrice.slow)
 
     this.updateSuggestedDataset(suggestedGasPrices)
@@ -115,7 +115,7 @@ export class DataStore {
         })
         this.suggestedDataset[1].data.push({
           x: `${blockNum}`,
-          y: `${set[i].standard}`
+          y: `${set[i].normal}`
         })
         this.suggestedDataset[2].data.push({
           x: `${blockNum}`,

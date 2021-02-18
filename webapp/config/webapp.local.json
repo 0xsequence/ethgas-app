@@ -1,3 +1,4 @@
 {
-  "apiServer": "http://localhost:4444"
+  "apiServer": "http://localhost:4444",
+  "networkName": "Ethereum"
 }

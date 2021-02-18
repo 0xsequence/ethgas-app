@@ -1,3 +1,4 @@
 {
-  "apiServer": "https://api.ethgas.app"
+  "apiServer": "https://api.ethgas.app",
+  "networkName": "Ethereum"
 }

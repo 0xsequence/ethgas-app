@@ -13,6 +13,8 @@ cloud.google.com/go/storage v1.0.0/go.mod h1:IhtSnM/ZTZV8YYJWCY8RULGVqBDmpoyjwiy
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/0xsequence/ethkit v1.1.9 h1:wS3VLxHxdHncHNGNuKAwfFG8B3234ZSc55Wxhkd/gXs=
 github.com/0xsequence/ethkit v1.1.9/go.mod h1:JqJO8DsUyy6MFL5fM8E5m2MgeiQ6mYT41xc4pvV42BI=
+github.com/0xsequence/ethkit v1.1.10 h1:Z9okY0bVHvJ27JE8QKWMNJFb/kr61NYhlkzzEPmj2cU=
+github.com/0xsequence/ethkit v1.1.10/go.mod h1:JqJO8DsUyy6MFL5fM8E5m2MgeiQ6mYT41xc4pvV42BI=
 github.com/Azure/azure-pipeline-go v0.2.1/go.mod h1:UGSo8XybXnIGZ3epmeBw7Jdz+HiUVpqIlpz/HKHylF4=
 github.com/Azure/azure-pipeline-go v0.2.2/go.mod h1:4rQ/NZncSvGqNkkOsNpOU1tgoNuIlp9AfUH5G1tvCHc=
 github.com/Azure/azure-storage-blob-go v0.7.0/go.mod h1:f9YQKtsG1nMisotuTPpO0tjNuEjKRYAcJU8/ydDI++4=

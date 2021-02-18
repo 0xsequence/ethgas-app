@@ -1,4 +1,4 @@
-# github.com/0xsequence/ethkit v1.1.9
+# github.com/0xsequence/ethkit v1.1.10
 ## explicit
 github.com/0xsequence/ethkit/ethgas
 github.com/0xsequence/ethkit/ethmonitor

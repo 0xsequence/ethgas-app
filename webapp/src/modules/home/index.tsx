@@ -4,6 +4,7 @@ import { LineChart } from './LineChart'
 import { Switcher } from '~/style'
 import { useStore, DataStore } from '~/stores'
 import { DataMode } from '~/stores/DataStore'
+import { env } from '~/env'
 
 export const HomeRoute = () => {
   const dataStore = useStore<DataStore>('data')
@@ -24,7 +25,7 @@ export const HomeRoute = () => {
         pt: [1, 1, 4],
         pb: [2, 2, 4]
       }}>
-        Ethereum Gas Price Gauge
+        {env.networkName} Gas Price Gauge
       </Box>
 
       <Flex type='centered-row' sx={{ mt: 2, mb: 3 }}>
@@ -43,7 +44,7 @@ export const HomeRoute = () => {
         {dataStore.mode.get() === DataMode.SUGGESTED && 
           <>
             <GasStat label={"Fast"} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} />
-            <GasStat label={"Standard"} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} />
+            <GasStat label={"Normal"} gasPrice={dataStore.suggestedNormal.get()} bgColor={'green'} />
             <GasStat label={"Slow"} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} />
           </>
         }
