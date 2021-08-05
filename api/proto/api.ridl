@@ -14,7 +14,7 @@ message SuggestedGasPrice
   - blockTime: uint64
   - instant: uint64
   - fast: uint64
-  - normal: uint64
+  - standard: uint64
   - slow: uint64
 
 message GasStat

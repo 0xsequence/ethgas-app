@@ -44,7 +44,7 @@ export const HomeRoute = () => {
         {dataStore.mode.get() === DataMode.SUGGESTED && 
           <>
             <GasStat label={"Fast"} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} />
-            <GasStat label={"Normal"} gasPrice={dataStore.suggestedNormal.get()} bgColor={'green'} />
+            <GasStat label={"Standard"} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} />
             <GasStat label={"Slow"} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} />
           </>
         }
