@@ -1,7 +1,7 @@
 SHELL             = bash -o pipefail
 TEST_FLAGS        ?= -v
 
-MOD_VENDOR        ?= -mod=vendor
+# MOD_VENDOR        ?= -mod=vendor
 GOMODULES         ?= on
 
 TOP 							:= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
