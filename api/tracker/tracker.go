@@ -33,12 +33,13 @@ func NewGasTracker(logger zerolog.Logger, gasGauge *ethgas.GasGauge) (*GasTracke
 }
 
 func (g *GasTracker) Start(ctx context.Context) error {
-	err := g.ETHGasGauge.Start(ctx)
+	go g.Main()
+
+	err := g.ETHGasGauge.Run(ctx)
 	if err != nil {
 		return err
 	}
 
-	go g.Main()
 	return nil
 }
 

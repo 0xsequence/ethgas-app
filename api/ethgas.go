@@ -168,7 +168,7 @@ func (s *ETHGas) Serve() []error {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			err := s.ETHMonitor.Start(context.Background()) // TODO: ctx..
+			err := s.ETHMonitor.Run(context.Background()) // TODO: ctx..
 			services <- err
 		}()
 	}

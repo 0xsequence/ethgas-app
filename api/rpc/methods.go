@@ -19,7 +19,7 @@ func (s *RPC) SuggestedGasPrice(ctx context.Context) (*proto.SuggestedGasPrice, 
 		BlockTime: sg.BlockTime,
 		Instant:   sg.Instant,
 		Fast:      sg.Fast,
-		Normal:    sg.Normal,
+		Normal:    sg.Standard,
 		Slow:      sg.Slow,
 	}
 
@@ -47,7 +47,7 @@ func (s *RPC) AllSuggestedGasPrices(ctx context.Context, count *uint) ([]*proto.
 			BlockTime: v.BlockTime,
 			Instant:   v.Instant,
 			Fast:      v.Fast,
-			Normal:    v.Normal,
+			Normal:    v.Standard,
 			Slow:      v.Slow,
 		}
 		resp = append(resp, d)
