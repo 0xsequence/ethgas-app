@@ -20,19 +20,23 @@ docker-run-api-mainnet:
 		ethgas/api
 
 docker-run-api-polygon:
-	docker run --name ethgas-api -d -e VIRTUAL_HOST=polygon-api.ethgas.app \
+	docker run --name polygon-ethgas-api -d -e VIRTUAL_HOST=polygon-api.ethgas.app \
 		-p 4445:4444 -v /etc/ethgas.polygon.conf:/etc/ethgas.conf \
 		--log-opt max-size=100m --log-opt max-file=5 \
 		ethgas/api
 
 docker-run-webapp-mainnet:
-	DIST=dist-mainnet; docker run --name ethgas-webapp -d -e VIRTUAL_HOST=ethgas.app \
+	docker run --name ethgas-webapp -d \
+		-e VIRTUAL_HOST=ethgas.app \
+		-e DIST=dist-mainnet \
 		-p 5555:80 \
 		--log-opt max-size=100m --log-opt max-file=5 \
 		ethgas/webapp
 
 docker-run-webapp-polygon:
-	DIST=dist-polygon; docker run --name ethgas-webapp -d -e VIRTUAL_HOST=polygon.ethgas.app \
+	docker run --name polygon-ethgas-webapp -d \
+		-e VIRTUAL_HOST=polygon.ethgas.app \
+		-e DIST=dist-polygon \
 		-p 5556:80 \
 		--log-opt max-size=100m --log-opt max-file=5 \
 		ethgas/webapp
