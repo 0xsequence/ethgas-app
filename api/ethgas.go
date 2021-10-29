@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/0xsequence/ethgas-app/config"
-	"github.com/0xsequence/ethgas-app/lib/stdzerolog"
 	"github.com/0xsequence/ethgas-app/rpc"
 	"github.com/0xsequence/ethgas-app/tracker"
 	"github.com/0xsequence/ethkit/ethgas"
 	"github.com/0xsequence/ethkit/ethmonitor"
 	"github.com/0xsequence/ethkit/ethrpc"
+	"github.com/0xsequence/go-sequence/lib/logadapter"
 	"github.com/go-chi/httplog"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -85,7 +85,7 @@ func New(cfg *config.Config) (*ETHGas, error) {
 	var monitor *ethmonitor.Monitor
 	modlog := log.Logger.With().Str("module", "monitor").Logger()
 	monitorOptions := ethmonitor.DefaultOptions
-	monitorOptions.Logger = stdzerolog.Wrap(modlog)
+	monitorOptions.Logger = logadapter.Wrap(modlog)
 	// if logLevel == zerolog.DebugLevel {
 	// 	monitorOptions.DebugLogging = true
 	// }
@@ -103,7 +103,7 @@ func New(cfg *config.Config) (*ETHGas, error) {
 	//
 	// Gas gauge
 	//
-	gasGauge, err := ethgas.NewGasGauge(stdzerolog.Wrap(log.Logger), monitor)
+	gasGauge, err := ethgas.NewGasGauge(logadapter.Wrap(modlog), monitor)
 	if err != nil {
 		return nil, err
 	}
