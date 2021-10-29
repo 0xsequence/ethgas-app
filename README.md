@@ -1,7 +1,7 @@
 ethgas app
 ==========
 
-See https://ethgas.app
+See https://ethgas.app and https://polygon.ethgas.app
 
 Hope you enjoy!
 
