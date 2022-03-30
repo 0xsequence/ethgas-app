@@ -39,8 +39,8 @@ cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/0xsequence/ethkit v1.11.0/go.mod h1:cyPNqgfJPwKgG7iXI9p6cBgIgxdPN2eh+FmeBU9EvTI=
 github.com/0xsequence/ethkit v1.11.1/go.mod h1:cyPNqgfJPwKgG7iXI9p6cBgIgxdPN2eh+FmeBU9EvTI=
-github.com/0xsequence/ethkit v1.12.0 h1:LlnRtS9Abmv6Tjp5OmyubnPBuWPCaTtU/DElrnkxkCc=
-github.com/0xsequence/ethkit v1.12.0/go.mod h1:cyPNqgfJPwKgG7iXI9p6cBgIgxdPN2eh+FmeBU9EvTI=
+github.com/0xsequence/ethkit v1.12.1 h1:vN1BzUpMMdlZYkAQfzhlPTAhZc9NBeKMxyKinjTpsfs=
+github.com/0xsequence/ethkit v1.12.1/go.mod h1:cyPNqgfJPwKgG7iXI9p6cBgIgxdPN2eh+FmeBU9EvTI=
 github.com/0xsequence/go-ethauth v0.11.0/go.mod h1:b35SVvB9AkRCZaMFGiYW+uxR//st3SU1xtxw0b7N7Z0=
 github.com/0xsequence/go-sequence v0.11.2 h1:/hiIfYXV8LBCyEPAzU1PbUWHMV1VRSWNoroAuS/suA8=
 github.com/0xsequence/go-sequence v0.11.2/go.mod h1:p/VDwDIlcQxKYhut/a2wtamIuaePG1EWNTwhMBJW0Bc=
