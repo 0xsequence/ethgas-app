@@ -10,4 +10,10 @@ listen          = "0.0.0.0:4444"
   jwt_secret    = "xxx"
 
 [ethereum]
-  url           = "https://mainnet.infura.io/v3/xxx"
+  # url = "https://polygon-mainnet.infura.io/v3/xxx"
+  # min_gas_price_in_gwei = 30
+  # use_eip_1559 = true
+
+  url = "https://mainnet.infura.io/v3/xxx"
+  min_gas_price_in_gwei = 1
+  use_eip_1559 = false
