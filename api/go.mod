@@ -9,7 +9,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-chi/cors v1.2.0
 	github.com/go-chi/httplog v0.2.4
-	github.com/go-chi/stampede v0.5.0
+	github.com/go-chi/stampede v0.5.1
 	github.com/goware/rerun v0.0.4
 	github.com/rs/zerolog v1.26.1
 	github.com/spf13/cobra v1.2.1
