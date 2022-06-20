@@ -11,9 +11,9 @@ listen          = "0.0.0.0:4444"
 
 [ethereum]
   # url = "https://polygon-mainnet.infura.io/v3/xxx"
-  # min_gas_price_in_gwei = 30
+  # min_gas_price = 30000000000
   # use_eip_1559 = true
 
   url = "https://mainnet.infura.io/v3/xxx"
-  min_gas_price_in_gwei = 1
+  min_gas_price = 1000000000
   use_eip_1559 = false

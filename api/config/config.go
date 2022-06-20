@@ -33,9 +33,9 @@ type Auth struct {
 }
 
 type EthereumConfig struct {
-	URL               string `toml:"url"`
-	MinGasPriceInGwei uint64 `toml:"min_gas_price_in_gwei"`
-	UseEIP1559        bool   `toml:"use_eip_1559"`
+	URL         string `toml:"url"`
+	MinGasPrice uint64 `toml:"min_gas_price"`
+	UseEIP1559  bool   `toml:"use_eip_1559"`
 }
 
 func NewFromFile(file string, env string, config interface{}) error {

@@ -103,7 +103,11 @@ func New(cfg *config.Config) (*ETHGas, error) {
 	//
 	// Gas gauge
 	//
-	gasGauge, err := ethgas.NewGasGauge(logadapter.Wrap(modlog), monitor, cfg.Ethereum.MinGasPriceInGwei, cfg.Ethereum.UseEIP1559)
+	minGasPrice := cfg.Ethereum.MinGasPrice
+	if minGasPrice == 0 {
+		minGasPrice = 1
+	}
+	gasGauge, err := ethgas.NewGasGaugeWei(logadapter.Wrap(modlog), monitor, minGasPrice, cfg.Ethereum.UseEIP1559)
 	if err != nil {
 		return nil, err
 	}
