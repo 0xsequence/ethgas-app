@@ -9,6 +9,21 @@ export enum DataMode {
 export const MaxNumDataPoints = 70
 
 export class DataStore {
+  // NOTE: if you want to switch which network to show data, just change
+  // this below..
+  // TODO: we can use local storage to remember last selected..
+  // network = observable('mainnet')
+  // networkTitle = observable('Ethereum')
+
+  network = observable('polygon')
+  networkTitle = observable('Polygon')
+
+  // network = observable('arbitrum')
+  // networkTitle = observable('Arbitrum')
+
+  // network = observable('bsc')
+  // networkTitle = observable('BSC')
+
   mode = observable<DataMode>(DataMode.SUGGESTED)
 
   suggestedFast = observable<number>(0)
@@ -57,7 +72,7 @@ export class DataStore {
       count = 5
     }
 
-    const { suggestedGasPrices } = await api.allSuggestedGasPrices({ count: count })
+    const { suggestedGasPrices } = await api.allSuggestedGasPrices({ network: this.network.get(), count: count })
 
     if (suggestedGasPrices.length === 0) {
       return
@@ -85,7 +100,7 @@ export class DataStore {
       count = 5
     }
 
-    const { gasStats } = await api.allGasStats({ count: count })
+    const { gasStats } = await api.allGasStats({ network: this.network.get(), count: count })
 
     if (gasStats.length === 0) {
       return

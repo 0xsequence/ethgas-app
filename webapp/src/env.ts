@@ -6,8 +6,7 @@ declare global {
 
 export const env = {
   debug: false,
-  apiServer: `${window.APP_CONFIG.apiServer || 'http://localhost:4444'}`,
-  networkName: `${window.APP_CONFIG.networkName || 'Ethereum'}`,
+  apiServer: `${window.APP_CONFIG.apiServer || 'http://localhost:4444'}`
 }
 
 // env.debug = true
