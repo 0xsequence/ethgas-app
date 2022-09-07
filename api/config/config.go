@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/0xsequence/ethgas-app/lib/ethproviders"
 	"github.com/BurntSushi/toml"
 )
 
@@ -16,7 +17,7 @@ type Config struct {
 	Logging LoggingConfig `toml:"logging"`
 	Auth    Auth          `toml:"auth"`
 
-	Ethereum EthereumConfig `toml:"ethereum"`
+	Networks ethproviders.Config `toml:"networks"`
 }
 
 type LoggingConfig struct {
@@ -30,12 +31,6 @@ type LoggingConfig struct {
 
 type Auth struct {
 	JWTSecret string `toml:"jwt_secret"`
-}
-
-type EthereumConfig struct {
-	URL         string `toml:"url"`
-	MinGasPrice uint64 `toml:"min_gas_price"`
-	UseEIP1559  bool   `toml:"use_eip_1559"`
 }
 
 func NewFromFile(file string, env string, config interface{}) error {

@@ -28,8 +28,8 @@ service ETHGas
   - Ping() => (ok: bool)
   - Version() => (version: Version)
 
-  - SuggestedGasPrice() => (suggestedGasPrice: SuggestedGasPrice)
-
-  - AllSuggestedGasPrices(count?: uint) => (suggestedGasPrices: []SuggestedGasPrice)
-  - AllGasStats(count?: uint) => (gasStats: []GasStat)
-  - GasPriceHistory() => (gasPriceHistory: map<uint64,[]uint64>)
+  - ListNetworks() => (networks: []string)
+  - SuggestedGasPrice(network: string) => (suggestedGasPrice: SuggestedGasPrice)
+  - AllSuggestedGasPrices(network: string, count?: uint) => (suggestedGasPrices: []SuggestedGasPrice)
+  - AllGasStats(network: string, count?: uint) => (gasStats: []GasStat)
+  - GasPriceHistory(network: string) => (gasPriceHistory: map<uint64,[]uint64>)

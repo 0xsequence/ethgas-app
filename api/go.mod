@@ -3,7 +3,7 @@ module github.com/0xsequence/ethgas-app
 go 1.18
 
 require (
-	github.com/0xsequence/ethkit v1.14.0
+	github.com/0xsequence/ethkit v1.14.1
 	github.com/0xsequence/go-sequence v0.12.7
 	github.com/BurntSushi/toml v0.4.1
 	github.com/go-chi/chi/v5 v5.0.7

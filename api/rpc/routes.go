@@ -11,8 +11,12 @@ import (
 func routesV1(rpc *RPC) chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/gas/suggested", func(w http.ResponseWriter, r *http.Request) {
-		suggestedGasPrice, err := rpc.SuggestedGasPrice(r.Context())
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		respondJSON(w, rpc.networkList)
+	})
+
+	r.Get("/{network}/gas/suggested", func(w http.ResponseWriter, r *http.Request) {
+		suggestedGasPrice, err := rpc.SuggestedGasPrice(r.Context(), chi.URLParam(r, "network"))
 		if err != nil {
 			respondJSON(w, err)
 			return
@@ -20,9 +24,9 @@ func routesV1(rpc *RPC) chi.Router {
 		respondJSON(w, suggestedGasPrice)
 	})
 
-	r.Get("/gas/history/suggested", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/{network}/gas/history/suggested", func(w http.ResponseWriter, r *http.Request) {
 		c := uint(20)
-		data, err := rpc.AllSuggestedGasPrices(r.Context(), &c)
+		data, err := rpc.AllSuggestedGasPrices(r.Context(), chi.URLParam(r, "network"), &c)
 		if err != nil {
 			respondJSON(w, err)
 			return
@@ -30,9 +34,9 @@ func routesV1(rpc *RPC) chi.Router {
 		respondJSON(w, data)
 	})
 
-	r.Get("/gas/history/actual", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/{network}/gas/history/actual", func(w http.ResponseWriter, r *http.Request) {
 		c := uint(20)
-		data, err := rpc.AllGasStats(r.Context(), &c)
+		data, err := rpc.AllGasStats(r.Context(), chi.URLParam(r, "network"), &c)
 		if err != nil {
 			respondJSON(w, err)
 			return
@@ -40,8 +44,8 @@ func routesV1(rpc *RPC) chi.Router {
 		respondJSON(w, data)
 	})
 
-	r.Get("/gas/history/blocks", func(w http.ResponseWriter, r *http.Request) {
-		data, err := rpc.GasPriceHistory(r.Context())
+	r.Get("/{network}/gas/history/blocks", func(w http.ResponseWriter, r *http.Request) {
+		data, err := rpc.GasPriceHistory(r.Context(), chi.URLParam(r, "network"))
 		if err != nil {
 			respondJSON(w, err)
 			return

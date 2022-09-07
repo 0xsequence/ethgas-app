@@ -7,8 +7,17 @@ import (
 	"github.com/0xsequence/ethgas-app/tracker"
 )
 
-func (s *RPC) SuggestedGasPrice(ctx context.Context) (*proto.SuggestedGasPrice, error) {
-	sg := s.ETHGasGauge.SuggestedGasPrice()
+func (s *RPC) ListNetworks(ctx context.Context) ([]string, error) {
+	return s.networkList, nil
+}
+
+func (s *RPC) SuggestedGasPrice(ctx context.Context, network string) (*proto.SuggestedGasPrice, error) {
+	gasGauge, ok := s.ETHGasGauges[network]
+	if !ok {
+		return nil, proto.Failf("unknown network")
+	}
+
+	sg := gasGauge.SuggestedGasPrice()
 
 	if sg.BlockNum == nil {
 		return nil, proto.Errorf(proto.ErrAborted, "suggested price hasn't been computed yet")
@@ -26,8 +35,13 @@ func (s *RPC) SuggestedGasPrice(ctx context.Context) (*proto.SuggestedGasPrice, 
 	return resp, nil
 }
 
-func (s *RPC) AllSuggestedGasPrices(ctx context.Context, count *uint) ([]*proto.SuggestedGasPrice, error) {
-	data := s.GasTracker.Suggested
+func (s *RPC) AllSuggestedGasPrices(ctx context.Context, network string, count *uint) ([]*proto.SuggestedGasPrice, error) {
+	gasTracker, ok := s.GasTrackers[network]
+	if !ok {
+		return nil, proto.Failf("unknown network")
+	}
+
+	data := gasTracker.Suggested
 	if len(data) == 0 {
 		return nil, proto.Errorf(proto.ErrAborted, "suggested price hasn't been computed yet")
 	}
@@ -56,8 +70,13 @@ func (s *RPC) AllSuggestedGasPrices(ctx context.Context, count *uint) ([]*proto.
 	return resp, nil
 }
 
-func (s *RPC) AllGasStats(ctx context.Context, count *uint) ([]*proto.GasStat, error) {
-	data := s.GasTracker.Actual
+func (s *RPC) AllGasStats(ctx context.Context, network string, count *uint) ([]*proto.GasStat, error) {
+	gasTracker, ok := s.GasTrackers[network]
+	if !ok {
+		return nil, proto.Failf("unknown network")
+	}
+
+	data := gasTracker.Actual
 	if len(data) == 0 {
 		return nil, proto.Errorf(proto.ErrAborted, "awaiting incoming block data")
 	}
@@ -85,6 +104,11 @@ func (s *RPC) AllGasStats(ctx context.Context, count *uint) ([]*proto.GasStat, e
 	return resp, nil
 }
 
-func (s *RPC) GasPriceHistory(ctx context.Context) (map[uint64][]uint64, error) {
-	return s.GasTracker.PriceHistory, nil
+func (s *RPC) GasPriceHistory(ctx context.Context, network string) (map[uint64][]uint64, error) {
+	gasTracker, ok := s.GasTrackers[network]
+	if !ok {
+		return nil, proto.Failf("unknown network")
+	}
+
+	return gasTracker.PriceHistory, nil
 }
