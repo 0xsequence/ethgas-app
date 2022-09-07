@@ -6,11 +6,11 @@ import (
 	"time"
 
 	"github.com/0xsequence/ethgas-app/config"
+	"github.com/0xsequence/ethgas-app/lib/ethproviders"
 	"github.com/0xsequence/ethgas-app/proto"
 	"github.com/0xsequence/ethgas-app/tracker"
 	"github.com/0xsequence/ethkit/ethgas"
 	"github.com/0xsequence/ethkit/ethmonitor"
-	"github.com/0xsequence/ethkit/ethrpc"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -24,22 +24,32 @@ type RPC struct {
 	Config *config.Config
 	Log    zerolog.Logger
 
-	HTTP        *http.Server
-	ETHProvider *ethrpc.Provider
-	ETHMonitor  *ethmonitor.Monitor
-	ETHGasGauge *ethgas.GasGauge
-	GasTracker  *tracker.GasTracker
+	HTTP *http.Server
+
+	ETHProviders *ethproviders.Providers
+	ETHMonitors  map[string]*ethmonitor.Monitor
+	ETHGasGauges map[string]*ethgas.GasGauge
+	GasTrackers  map[string]*tracker.GasTracker
+
+	networkList []*proto.NetworkInfo
 }
 
-func New(cfg *config.Config, provider *ethrpc.Provider, monitor *ethmonitor.Monitor, gasGauge *ethgas.GasGauge, gasTracker *tracker.GasTracker) (*RPC, error) {
+func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[string]*ethmonitor.Monitor, gasGauges map[string]*ethgas.GasGauge, gasTrackers map[string]*tracker.GasTracker) (*RPC, error) {
+	networkList := []*proto.NetworkInfo{}
+	for chainHandle := range monitors {
+		chainInfo := providers.GetConfig(chainHandle)
+		networkList = append(networkList, &proto.NetworkInfo{Handle: chainHandle, Title: chainInfo.Title})
+	}
+
 	s := &RPC{
-		Config:      cfg,
-		Log:         log.With().Str("module", "rpc").Logger(),
-		HTTP:        &http.Server{Addr: cfg.Listen},
-		ETHProvider: provider,
-		ETHMonitor:  monitor,
-		ETHGasGauge: gasGauge,
-		GasTracker:  gasTracker,
+		Config:       cfg,
+		Log:          log.With().Str("module", "rpc").Logger(),
+		HTTP:         &http.Server{Addr: cfg.Listen},
+		ETHProviders: providers,
+		ETHMonitors:  monitors,
+		ETHGasGauges: gasGauges,
+		GasTrackers:  gasTrackers,
+		networkList:  networkList,
 	}
 	return s, nil
 }

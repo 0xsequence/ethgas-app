@@ -25,7 +25,7 @@ export const HomeRoute = () => {
         pt: [1, 1, 4],
         pb: [2, 2, 4]
       }}>
-        {env.networkName} Gas Price Gauge
+        {dataStore.networkTitle.get()} Gas Price Gauge
       </Box>
 
       <Flex type='centered-row' sx={{ mt: 2, mb: 3 }}>

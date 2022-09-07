@@ -13,7 +13,7 @@ type GasTracker struct {
 	Logger      zerolog.Logger
 	ETHGasGauge *ethgas.GasGauge
 
-	PriceHistory map[uint64][]uint64
+	PriceHistory map[uint64][]float64
 	Suggested    []ethgas.SuggestedGasPrice
 	Actual       []GasPriceStat
 	blockNums    []uint64
@@ -25,7 +25,7 @@ func NewGasTracker(logger zerolog.Logger, gasGauge *ethgas.GasGauge) (*GasTracke
 	return &GasTracker{
 		Logger:       logger,
 		ETHGasGauge:  gasGauge,
-		PriceHistory: make(map[uint64][]uint64),
+		PriceHistory: make(map[uint64][]float64),
 		Suggested:    []ethgas.SuggestedGasPrice{},
 		Actual:       []GasPriceStat{},
 		blockNums:    []uint64{},
@@ -61,13 +61,13 @@ func (g *GasTracker) Main() error {
 			}
 
 			// Actual -- stats
-			gasPrices := []uint64{}
+			gasPrices := []float64{}
 			for _, txn := range txns {
 				gp := txn.GasPrice().Uint64()
-				if gp <= 1e9 {
+				if gp <= 1e8 {
 					continue // skip prices which are outliers / "deals with miner"
 				}
-				gasPrices = append(gasPrices, txn.GasPrice().Uint64()/1e9)
+				gasPrices = append(gasPrices, float64(txn.GasPrice().Uint64())/float64(1e9))
 			}
 			// low to high
 			sort.Slice(gasPrices, func(i, j int) bool {
@@ -106,17 +106,18 @@ func (g *GasTracker) Main() error {
 }
 
 type GasPriceStat struct {
-	Num     uint64 `json:"num"`
-	Average uint64 `json:"average"`
-	Median  uint64 `json:"median"`
-	Min     uint64 `json:"min"`
-	Max     uint64 `json:"max"`
+	// numbers are in gwei
+	Num     uint64  `json:"num"`
+	Average float64 `json:"average"`
+	Median  float64 `json:"median"`
+	Min     float64 `json:"min"`
+	Max     float64 `json:"max"`
 
 	BlockNum  *big.Int `json:"blockNum"`
 	BlockTime uint64   `json:"blockTime"`
 }
 
-func calcStat(prices []uint64) GasPriceStat {
+func calcStat(prices []float64) GasPriceStat {
 	if len(prices) == 0 {
 		return GasPriceStat{}
 	}
@@ -125,9 +126,9 @@ func calcStat(prices []uint64) GasPriceStat {
 	s.Num = uint64(len(prices))
 
 	// average, min, max
-	t := uint64(0)
+	t := float64(0)
 	min := prices[0]
-	max := uint64(0)
+	max := float64(0)
 	for _, p := range prices {
 		t += p
 		if p < min {
@@ -137,7 +138,7 @@ func calcStat(prices []uint64) GasPriceStat {
 			max = p
 		}
 	}
-	s.Average = t / s.Num
+	s.Average = t / float64(s.Num)
 	s.Min = min
 	s.Max = max
 

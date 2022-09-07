@@ -9,11 +9,8 @@ listen          = "0.0.0.0:4444"
 [auth]
   jwt_secret    = "xxx"
 
-[ethereum]
-  # url = "https://polygon-mainnet.infura.io/v3/xxx"
-  # min_gas_price = 30000000000
-  # use_eip_1559 = true
-
-  url = "https://mainnet.infura.io/v3/xxx"
-  min_gas_price = 1000000000
-  use_eip_1559 = false
+[networks]
+  mainnet       = { title = "Ethereum", url = "https://etc/mainnet",   min_gas_price = 1_000_000_000, use_eip_1559 = true }
+  polygon       = { title = "Polygon",  url = "https://etc/polygon",   min_gas_price = 30_000_000_000, use_eip_1559 = true }
+  arbitrum      = { title = "Arbitrum", url = "https://etc/arbitrum",  min_gas_price = 100_000_000, use_eip_1559 = true }
+  bsc           = { title = "BSC",      url = "https://etc/bsc",       min_gas_price = 1_000_000_000, use_eip_1559 = true }
