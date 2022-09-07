@@ -12,24 +12,28 @@ message Version
 message SuggestedGasPrice
   - blockNum: uint64
   - blockTime: uint64
-  - instant: uint64
-  - fast: uint64
-  - standard: uint64
-  - slow: uint64
+  - instant: float64
+  - fast: float64
+  - standard: float64
+  - slow: float64
 
 message GasStat
   - blockNum: uint64
   - blockTime: uint64
-  - max: uint64
-  - average: uint64
-  - min: uint64
+  - max: float64
+  - average: float64
+  - min: float64
+
+message NetworkInfo
+  - handle: string
+  - title: string
 
 service ETHGas
   - Ping() => (ok: bool)
   - Version() => (version: Version)
 
-  - ListNetworks() => (networks: []string)
+  - ListNetworks() => (networks: []NetworkInfo)
   - SuggestedGasPrice(network: string) => (suggestedGasPrice: SuggestedGasPrice)
   - AllSuggestedGasPrices(network: string, count?: uint) => (suggestedGasPrices: []SuggestedGasPrice)
   - AllGasStats(network: string, count?: uint) => (gasStats: []GasStat)
-  - GasPriceHistory(network: string) => (gasPriceHistory: map<uint64,[]uint64>)
+  - GasPriceHistory(network: string) => (gasPriceHistory: map<uint64,[]float64>)

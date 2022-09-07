@@ -31,13 +31,14 @@ type RPC struct {
 	ETHGasGauges map[string]*ethgas.GasGauge
 	GasTrackers  map[string]*tracker.GasTracker
 
-	networkList []string
+	networkList []*proto.NetworkInfo
 }
 
 func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[string]*ethmonitor.Monitor, gasGauges map[string]*ethgas.GasGauge, gasTrackers map[string]*tracker.GasTracker) (*RPC, error) {
-	networkList := []string{}
+	networkList := []*proto.NetworkInfo{}
 	for chainHandle := range monitors {
-		networkList = append(networkList, chainHandle)
+		chainInfo := providers.GetConfig(chainHandle)
+		networkList = append(networkList, &proto.NetworkInfo{Handle: chainHandle, Title: chainInfo.Title})
 	}
 
 	s := &RPC{
