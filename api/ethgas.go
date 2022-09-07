@@ -89,7 +89,7 @@ func New(cfg *config.Config) (*ETHGas, error) {
 		// note: ethevents runs its own monitor instance that fetches actual logs.
 		//
 		var monitor *ethmonitor.Monitor
-		modlog := log.Logger.With().Str("module", "monitor").Logger()
+		modlog := log.Logger.With().Str("module", "monitor").Str("chain", chainHandle).Logger()
 		monitorOptions := ethmonitor.DefaultOptions
 		monitorOptions.Logger = logadapter.Wrap(modlog)
 		// if logLevel == zerolog.DebugLevel {
