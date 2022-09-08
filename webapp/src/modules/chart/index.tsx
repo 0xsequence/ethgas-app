@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { NetworkSelect } from '~/components/ui/NetworkSelect'
 import { SAVED_NETWORK_HANDLE } from '~/constants/localStorageKeys'
-import { Styled, Box, Flex, Text } from '~/style'
+import { Styled, Box, Flex, Text, Select } from '~/style'
 import { LineChart } from './LineChart'
 import { Switcher } from '~/style'
-import { useStore, DataStore, useObservable } from '~/stores'
+import { useStore, DataStore, RouterStore, useObservable } from '~/stores'
 import { DataMode } from '~/stores/DataStore'
 
 export const ChartRoute = () => {
   const dataStore = useStore<DataStore>('data')
+  const routerStore = useStore<RouterStore>('router')
   const networks = useObservable(dataStore.networks)
+  const network = useObservable(dataStore.network)
   const { networkId } = useParams<{ networkId: string }>()
 
   const currentSupportedNetwork = networks && networks.find((network) => network.handle === networkId)
@@ -45,7 +48,27 @@ export const ChartRoute = () => {
           pt: [1, 1, 4],
           pb: [2, 2, 4]
         }}>
-          {`Network ${networkId} is not supported`}
+          {`Invalid network "${networkId}"`}
+        </Box>
+        <Box
+          sx={{
+            color: 'white',
+            fontSize: 4,
+            fontWeight:'heading',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10px'
+          }}
+        >
+          <Text>Please select a network:</Text>
+          <NetworkSelect
+            onChange={(selectNetwork) => {
+              routerStore.push(selectNetwork)
+            }}
+            currentNetwork={network}
+            networks={networks}
+        />
         </Box>
       </Box>
     )
@@ -58,16 +81,39 @@ export const ChartRoute = () => {
         pt: 4,
         px: [0, 0, 5],
     }}>
-
       <Box sx={{
-        color: 'white',
-        fontSize: 4,
-        fontWeight:'heading',
-        textAlign: 'center',
-        pt: [1, 1, 4],
-        pb: [2, 2, 4]
-      }}>
-        {dataStore.networkTitle.get()} Gas Price Gauge
+          color: 'white',
+          fontSize: 4,
+          fontWeight:'heading',
+          textAlign: 'center',
+          pt: [1, 1, 4],
+          pb: [2, 2, 4],
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-end'
+        }}
+      >
+        <Text>
+          Gas Price Gauge - Network:
+        </Text>
+        <Box
+          sx={{
+            fontWeight: 'bold',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            ml: '5px',
+            mb: '-6px'
+          }}
+        >
+          <NetworkSelect
+            onChange={(selectNetwork) => {
+              routerStore.push(selectNetwork)
+            }}
+            currentNetwork={network}
+            networks={networks}
+          />
+        </Box>
       </Box>
 
       <Flex type='centered-row' sx={{ mt: 2, mb: 3 }}>
