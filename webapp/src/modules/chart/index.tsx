@@ -1,13 +1,55 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { SAVED_NETWORK_HANDLE } from '~/constants/localStorageKeys'
 import { Styled, Box, Flex, Text } from '~/style'
 import { LineChart } from './LineChart'
 import { Switcher } from '~/style'
-import { useStore, DataStore } from '~/stores'
+import { useStore, DataStore, useObservable } from '~/stores'
 import { DataMode } from '~/stores/DataStore'
-import { env } from '~/env'
 
-export const HomeRoute = () => {
+export const ChartRoute = () => {
   const dataStore = useStore<DataStore>('data')
+  const networks = useObservable(dataStore.networks)
+  const { networkId } = useParams<{ networkId: string }>()
+
+  const currentSupportedNetwork = networks && networks.find((network) => network.handle === networkId)
+
+  useEffect(() => {
+    dataStore.fetchNetworks()
+  }, [])
+
+  useEffect(() => {
+    if (currentSupportedNetwork) {
+      localStorage.setItem(SAVED_NETWORK_HANDLE, currentSupportedNetwork.handle)
+      dataStore.setNetwork(currentSupportedNetwork.handle, currentSupportedNetwork.title)
+    }
+  }, [networks, networkId])
+
+  if (!networks) {
+    return (null)
+  }
+
+  // State if network is unsupported with the dropdown....
+  if (!currentSupportedNetwork) {
+    return(
+      <Box
+        sx={{
+          pt: 4,
+          px: [0, 0, 5],
+      }}>
+        <Box sx={{
+          color: 'white',
+          fontSize: 4,
+          fontWeight:'heading',
+          textAlign: 'center',
+          pt: [1, 1, 4],
+          pb: [2, 2, 4]
+        }}>
+          {`Network ${networkId} is not supported`}
+        </Box>
+      </Box>
+    )
+  }
 
   return (
     <Box

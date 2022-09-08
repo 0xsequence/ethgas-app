@@ -1,5 +1,5 @@
 import { RootStore, observable } from '~/stores'
-import { SuggestedGasPrice, GasStat } from '~/lib/apiclient'
+import { SuggestedGasPrice, GasStat, NetworkInfo } from '~/lib/apiclient'
 
 export enum DataMode {
   SUGGESTED = 'SUGGESTED',
@@ -8,15 +8,26 @@ export enum DataMode {
 
 export const MaxNumDataPoints = 70
 
-export class DataStore {
-  // NOTE: if you want to switch which network to show data, just change
-  // this below..
-  // TODO: we can use local storage to remember last selected..
-  // network = observable('mainnet')
-  // networkTitle = observable('Ethereum')
+const suggestedDatasetDefault = [
+  { 'id': 'slow', 'data': [] },
+  { 'id': 'standard', 'data': [] },
+  { 'id': 'fast', 'data': [] }
+]
 
-  network = observable('polygon')
-  networkTitle = observable('Polygon')
+const actualDatasetDefault = [
+  { 'id': 'min', 'data': [] },
+  { 'id': 'average', 'data': [] },
+  { 'id': 'max', 'data': [] }
+]
+
+export class DataStore {
+  networks = observable<Array<NetworkInfo>|null>(null)
+
+  network = observable('mainnet')
+  networkTitle = observable('Ethereum')
+
+  // network = observable('polygon')
+  // networkTitle = observable('Polygon')
 
   // network = observable('arbitrum')
   // networkTitle = observable('Arbitrum')
@@ -30,21 +41,13 @@ export class DataStore {
   suggestedStandard = observable<number>(0)
   suggestedSlow = observable<number>(0)
 
-  suggestedDataset: any[] = [
-    { 'id': 'slow', 'data': [] },
-    { 'id': 'standard', 'data': [] },
-    { 'id': 'fast', 'data': [] }
-  ]
+  suggestedDataset: any[] = suggestedDatasetDefault
 
   actualMax = observable<number>(0)
   actualAverage = observable<number>(0)
   actualMin = observable<number>(0)
 
-  actualDataset: any[] = [
-    { 'id': 'min', 'data': [] },
-    { 'id': 'average', 'data': [] },
-    { 'id': 'max', 'data': [] }
-  ]
+  actualDataset: any[] = actualDatasetDefault
 
   lastSuggestedPoll: number = 0
   lastActualPoll: number = 0
@@ -236,5 +239,35 @@ export class DataStore {
     }
   }
 
+  resetChart() {
+    this.suggestedFast.set(0)
+    this.suggestedStandard.set(0)
+    this.suggestedSlow.set(0)
+    this.actualMax.set(0)
+    this.actualAverage.set(0)
+    this.actualMin.set(0)
+    this.actualDataset = actualDatasetDefault
+    this.suggestedDataset = suggestedDatasetDefault
+    this.lastSuggestedPoll = 0
+    this.lastActualPoll = 0
+    this.updated.set(0)
+  }
+
+  async fetchNetworks () {
+    if (!this.networks.get()) {
+      try {
+        const response = await this.root.api.listNetworks()
+        this.networks.set(response.networks)
+      } catch(e) {
+        console.error('Failed to fetch list of networks', e)
+      } 
+    }
+  }
+
+  setNetwork(handle: string, title: string) {
+    this.network.set(handle)
+    this.networkTitle.set(title)
+    this.resetChart()
+  }
 }
 

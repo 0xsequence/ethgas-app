@@ -1,16 +1,21 @@
 /* eslint-disable import/order */
-import React, { lazy, Suspense } from 'react'
+import React from 'react'
 import { Redirect, Route, RouteProps, Switch } from 'react-router-dom'
 
-import { Loading } from '#/ui/Loading'
-import { HomeRoute } from './home'
+import { ChartRoute } from './chart'
+import { HomeRoute } from './HomeRoute'
 
 // Route config
 const routeConfig = (): IRoute[] => [
   {
     path: '/',
     isExact: true,
-    component: HomeRoute
+    component: HomeRoute,
+  },
+  {
+    path: '/:networkId',
+    isExact: true,
+    component: ChartRoute
   }
 ]
 
