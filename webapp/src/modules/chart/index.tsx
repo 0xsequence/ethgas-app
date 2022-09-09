@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { NetworkSelect } from '~/components/ui/NetworkSelect'
 import { SAVED_NETWORK_HANDLE } from '~/constants/localStorageKeys'
-import { Styled, Box, Flex, Text, Select } from '~/style'
+import { Styled, Box, Flex, Text } from '~/style'
 import { LineChart } from './LineChart'
 import { Switcher } from '~/style'
 import { useStore, DataStore, RouterStore, useObservable } from '~/stores'
@@ -61,13 +61,13 @@ export const ChartRoute = () => {
             gap: '10px'
           }}
         >
-          <Text>Please select a network:</Text>
           <NetworkSelect
             onChange={(selectNetwork) => {
               routerStore.push(selectNetwork)
             }}
-            currentNetwork={network}
+            currentNetwork={""}
             networks={networks}
+            showDefaultOption
         />
         </Box>
       </Box>

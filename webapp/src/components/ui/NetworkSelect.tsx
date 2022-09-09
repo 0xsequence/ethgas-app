@@ -1,15 +1,16 @@
 import React from 'react'
 import { NetworkInfo } from '~/lib/apiclient'
-import { Box, Text, Select } from '~/style'
+import { Select } from '~/style'
 
 interface NetworkSelectProps {
   networks: NetworkInfo[]
   onChange: (val:string) => void
   currentNetwork: string
+  showDefaultOption?: boolean
 }
 
 export const NetworkSelect = (props: NetworkSelectProps) => {
-  const { networks, onChange, currentNetwork } = props
+  const { networks, onChange, currentNetwork, showDefaultOption = false } = props
 
   return (
     <Select
@@ -23,6 +24,16 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
         pr: '30px'
       }}
     >
+      {showDefaultOption && (
+        <option
+          style={{
+            color: 'black',
+            backgroundColor: 'background'
+          }}
+        >
+          Select a network...
+        </option>
+      )}
       {networks.map((network) => {
         return (
           <option
@@ -31,8 +42,9 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
               backgroundColor: 'background'
             }}
             value={network.handle}
-            // label={network.title}
-          >{network.title}</option>
+          >
+            {network.title}
+          </option>
         )
       })}
     </Select>

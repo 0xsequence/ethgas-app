@@ -8,32 +8,11 @@ export enum DataMode {
 
 export const MaxNumDataPoints = 70
 
-const suggestedDatasetDefault = [
-  { 'id': 'slow', 'data': [] },
-  { 'id': 'standard', 'data': [] },
-  { 'id': 'fast', 'data': [] }
-]
-
-const actualDatasetDefault = [
-  { 'id': 'min', 'data': [] },
-  { 'id': 'average', 'data': [] },
-  { 'id': 'max', 'data': [] }
-]
-
 export class DataStore {
   networks = observable<Array<NetworkInfo>|null>(null)
 
   network = observable('mainnet')
   networkTitle = observable('Ethereum')
-
-  // network = observable('polygon')
-  // networkTitle = observable('Polygon')
-
-  // network = observable('arbitrum')
-  // networkTitle = observable('Arbitrum')
-
-  // network = observable('bsc')
-  // networkTitle = observable('BSC')
 
   mode = observable<DataMode>(DataMode.SUGGESTED)
 
@@ -41,13 +20,21 @@ export class DataStore {
   suggestedStandard = observable<number>(0)
   suggestedSlow = observable<number>(0)
 
-  suggestedDataset: any[] = suggestedDatasetDefault
+  suggestedDataset: any[] = [
+    { 'id': 'slow', 'data': [] },
+    { 'id': 'standard', 'data': [] },
+    { 'id': 'fast', 'data': [] }
+  ]
 
   actualMax = observable<number>(0)
   actualAverage = observable<number>(0)
   actualMin = observable<number>(0)
 
-  actualDataset: any[] = actualDatasetDefault
+  actualDataset: any[] = [
+    { 'id': 'min', 'data': [] },
+    { 'id': 'average', 'data': [] },
+    { 'id': 'max', 'data': [] }
+  ]
 
   lastSuggestedPoll: number = 0
   lastActualPoll: number = 0
@@ -68,6 +55,7 @@ export class DataStore {
   }
 
   async pollSuggested() {
+    const network = this.network.get()
     const api = this.root.api
 
     let count = MaxNumDataPoints
@@ -77,7 +65,7 @@ export class DataStore {
 
     const { suggestedGasPrices } = await api.allSuggestedGasPrices({ network: this.network.get(), count: count })
 
-    if (suggestedGasPrices.length === 0) {
+    if (suggestedGasPrices.length === 0 || network !== this.network.get()) {
       return
     }
     const suggestedGasPrice = suggestedGasPrices[suggestedGasPrices.length-1]
@@ -96,6 +84,7 @@ export class DataStore {
   }
 
   async pollActual() {
+    const network = this.network.get()
     const api = this.root.api
 
     let count = MaxNumDataPoints
@@ -105,7 +94,7 @@ export class DataStore {
 
     const { gasStats } = await api.allGasStats({ network: this.network.get(), count: count })
 
-    if (gasStats.length === 0) {
+    if (gasStats.length === 0 || network !== this.network.get()) {
       return
     }
     const gasStat = gasStats[gasStats.length-1]
@@ -243,13 +232,22 @@ export class DataStore {
     this.suggestedFast.set(0)
     this.suggestedStandard.set(0)
     this.suggestedSlow.set(0)
+
     this.actualMax.set(0)
     this.actualAverage.set(0)
     this.actualMin.set(0)
-    this.actualDataset = actualDatasetDefault
-    this.suggestedDataset = suggestedDatasetDefault
+
+    this.actualDataset.forEach(dataset => {
+      dataset.data = []
+    })
+
+    this.suggestedDataset.forEach(dataset => {
+      dataset.data = []
+    })
+    
     this.lastSuggestedPoll = 0
     this.lastActualPoll = 0
+
     this.updated.set(0)
   }
 
