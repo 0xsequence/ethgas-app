@@ -155,7 +155,7 @@ export const ChartRoute = () => {
           alignItems: 'flex-end'
         }}
       >
-        <Text>Gas Price Gauge - Network:</Text>
+        <Text sx={{ margin: 'auto 0' }}>Gas Price Gauge &nbsp;</Text>
         <Box
           sx={{
             fontWeight: 'bold',
