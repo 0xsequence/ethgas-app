@@ -3,7 +3,9 @@ import { createBrowserHistory } from 'history'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router } from 'react-router-dom'
+
 import { createStore, StoreProvider, syncHistoryWithStore } from '~/stores'
+
 import App from './App'
 
 // store instance

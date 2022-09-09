@@ -1,16 +1,14 @@
 import { Observable, Unsubscriber } from 'micro-observables'
 import React, { useContext, useState, useEffect, useMemo } from 'react'
+
 import { env } from '~/env'
 import { ETHGasAPI } from '~/lib/apiclient'
+
 import { AppStore } from './AppStore'
 import { DataStore } from './DataStore'
 import { RouterStore, syncHistoryWithStore } from './RouterStore'
 
-export {
-  AppStore,
-  RouterStore,
-  DataStore
-}
+export { AppStore, RouterStore, DataStore }
 
 export class RootStore {
   api = new ETHGasAPI(env.apiServer)
@@ -63,6 +61,7 @@ export function useStore<T>(storeKey: keyof RootStore, observe?: null | ((store:
   let observables: Observable<any>[]
 
   if (observe === undefined) {
+    // eslint-disable-next-line
     observables = useMemo<Observable<any>[]>(() => {
       const v: Observable<any>[] = []
       const keys = Object.keys(store)
@@ -81,8 +80,10 @@ export function useStore<T>(storeKey: keyof RootStore, observe?: null | ((store:
     return store as T
   }
 
+  // eslint-disable-next-line
   const [, forceRender] = useState({})
 
+  // eslint-disable-next-line
   useEffect(() => {
     const unsubscribers: Unsubscriber[] = []
 

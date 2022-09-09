@@ -64,7 +64,7 @@ const text = {
     fontFamily: 'heading',
     fontWeight: 'heading',
     lineHeight: 'heading'
-  },
+  }
   // display: {
   //   variant: 'text.heading',
   //   fontSize: [5, 6],
@@ -373,7 +373,6 @@ const styles = {
   }
 }
 
-
 export const theme = {
   colors,
   space,
@@ -390,7 +389,7 @@ export const theme = {
   forms,
   alerts,
   layout,
-  styles,
+  styles
 }
 
 export type ThemeInterface = typeof theme

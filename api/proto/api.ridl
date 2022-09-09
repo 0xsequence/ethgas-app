@@ -27,6 +27,7 @@ message GasStat
 message NetworkInfo
   - handle: string
   - title: string
+  - token: string
 
 service ETHGas
   - Ping() => (ok: bool)
