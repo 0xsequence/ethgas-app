@@ -38,7 +38,7 @@ func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[str
 	networkList := []*proto.NetworkInfo{}
 	for chainHandle := range monitors {
 		chainInfo := providers.GetConfig(chainHandle)
-		networkList = append(networkList, &proto.NetworkInfo{Handle: chainHandle, Title: chainInfo.Title})
+		networkList = append(networkList, &proto.NetworkInfo{Handle: chainHandle, Title: chainInfo.Title, Token: chainInfo.Token})
 	}
 
 	s := &RPC{

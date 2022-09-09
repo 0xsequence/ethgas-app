@@ -13,6 +13,7 @@ export class DataStore {
 
   network = observable('mainnet')
   networkTitle = observable('Ethereum')
+  networkToken = observable('ETH')
 
   suggestedDatasetLoading = observable(true)
   actualDatasetLoading = observable(true)
@@ -281,9 +282,10 @@ export class DataStore {
     }
   }
 
-  setNetwork(handle: string, title: string) {
+  setNetwork(handle: string, title: string, token: string) {
     this.network.set(handle)
     this.networkTitle.set(title)
+    this.networkToken.set(token)
     this.resetChart()
   }
 }

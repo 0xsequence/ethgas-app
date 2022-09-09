@@ -16,6 +16,7 @@ export const ChartRoute = () => {
   const networks = useObservable(dataStore.networks)
   const network = useObservable(dataStore.network)
   const networkTitle = useObservable(dataStore.networkTitle)
+  const networkToken = useObservable(dataStore.networkToken)
   const suggestedDatasetLoading = useObservable(dataStore.suggestedDatasetLoading)
   const actualDatasetLoading = useObservable(dataStore.actualDatasetLoading)
   const apiError = useObservable(dataStore.apiError)
@@ -32,7 +33,7 @@ export const ChartRoute = () => {
   useEffect(() => {
     if (currentSupportedNetwork) {
       localStorage.setItem(SAVED_NETWORK_HANDLE, currentSupportedNetwork.handle)
-      dataStore.setNetwork(currentSupportedNetwork.handle, currentSupportedNetwork.title)
+      dataStore.setNetwork(currentSupportedNetwork.handle, currentSupportedNetwork.title, currentSupportedNetwork.token)
     }
   }, [networks, networkId])
 
@@ -155,7 +156,7 @@ export const ChartRoute = () => {
           alignItems: 'flex-end'
         }}
       >
-        <Text sx={{ margin: 'auto 0' }}>Gas Price Gauge &nbsp;</Text>
+        <Text sx={{ margin: 'auto 0' }}>{networkToken} Gas Price Gauge &nbsp;</Text>
         <Box
           sx={{
             fontWeight: 'bold',
