@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { Spinner } from 'theme-ui'
 import { NetworkSelect } from '~/components/ui/NetworkSelect'
 import { SAVED_NETWORK_HANDLE } from '~/constants/localStorageKeys'
 import { Styled, Box, Flex, Text } from '~/style'
@@ -13,7 +14,12 @@ export const ChartRoute = () => {
   const routerStore = useStore<RouterStore>('router')
   const networks = useObservable(dataStore.networks)
   const network = useObservable(dataStore.network)
+  const suggestedDatasetLoading = useObservable(dataStore.suggestedDatasetLoading)
+  const actualDatasetLoading = useObservable(dataStore.actualDatasetLoading)
+  const apiError = useObservable(dataStore.apiError)
   const { networkId } = useParams<{ networkId: string }>()
+
+  const loading = suggestedDatasetLoading || actualDatasetLoading 
 
   const currentSupportedNetwork = networks && networks.find((network) => network.handle === networkId)
 
@@ -32,7 +38,50 @@ export const ChartRoute = () => {
     return (null)
   }
 
-  // State if network is unsupported with the dropdown....
+  if (apiError) {
+    return(
+      <Box
+        sx={{
+          pt: 4,
+          px: [0, 0, 5],
+      }}>
+        <Box sx={{
+          color: 'white',
+          fontSize: 4,
+          fontWeight:'heading',
+          textAlign: 'center',
+          pt: [1, 1, 4],
+          pb: [2, 2, 4]
+        }}>
+          An error occurred while fetching the data 😭
+          <br />
+          Please select a network and try again
+        </Box>
+        <Box
+          sx={{
+            color: 'white',
+            fontSize: 4,
+            fontWeight:'heading',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '10px'
+          }}
+        >
+          <NetworkSelect
+            onChange={(selectNetwork) => {
+              dataStore.resetChart()
+              routerStore.push(selectNetwork)
+            }}
+            currentNetwork={""}
+            networks={networks}
+            showDefaultOption
+          />
+        </Box>
+      </Box>
+    )
+  }
+
   if (!currentSupportedNetwork) {
     return(
       <Box
@@ -48,7 +97,9 @@ export const ChartRoute = () => {
           pt: [1, 1, 4],
           pb: [2, 2, 4]
         }}>
-          {`Invalid network "${networkId}"`}
+          {`The network "${networkId}" is invalid 😭`}
+          <br />
+          Please select a network from the options below
         </Box>
         <Box
           sx={{
@@ -63,12 +114,13 @@ export const ChartRoute = () => {
         >
           <NetworkSelect
             onChange={(selectNetwork) => {
+              dataStore.resetChart()
               routerStore.push(selectNetwork)
             }}
             currentNetwork={""}
             networks={networks}
             showDefaultOption
-        />
+          />
         </Box>
       </Box>
     )
@@ -131,17 +183,17 @@ export const ChartRoute = () => {
 
         {dataStore.mode.get() === DataMode.SUGGESTED && 
           <>
-            <GasStat label={"Fast"} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} />
-            <GasStat label={"Standard"} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} />
-            <GasStat label={"Slow"} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} />
+            <GasStat label={"Fast"} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} loading={loading} />
+            <GasStat label={"Standard"} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} loading={loading} />
+            <GasStat label={"Slow"} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} loading={loading} />
           </>
         }
 
         {dataStore.mode.get() === DataMode.ACTUAL && 
           <>
-            <GasStat label={"Max"} gasPrice={dataStore.actualMax.get()} bgColor={'red'} />
-            <GasStat label={"Average"} gasPrice={dataStore.actualAverage.get()} bgColor={'green'} />
-            <GasStat label={"Min"} gasPrice={dataStore.actualMin.get()} bgColor={'yellow'} />
+            <GasStat label={"Max"} gasPrice={dataStore.actualMax.get()} bgColor={'red'} loading={loading} />
+            <GasStat label={"Average"} gasPrice={dataStore.actualAverage.get()} bgColor={'green'} loading={loading} />
+            <GasStat label={"Min"} gasPrice={dataStore.actualMin.get()} bgColor={'yellow'} loading={loading} />
           </>
         }
 
@@ -183,7 +235,7 @@ export const ChartRoute = () => {
         textAlign: 'center'
       }}>
         Fork it <Styled.a target="_blank" href="https://github.com/0xsequence/ethgas-app">github.com/0xsequence/ethgas-app</Styled.a>,
-        by <Styled.a target="_blank" href="https://horizon.io">Horizon.io</Styled.a>
+        built on <Styled.a target="_blank" href="https://sequence.xyz/">Sequence</Styled.a>
       </Box>
 
     </Box>
@@ -194,16 +246,19 @@ const GasStat = ({
   label,
   gasPrice,
   usdPrice,
-  bgColor
+  bgColor,
+  loading
 }: {
   label: string,
   gasPrice: number,
   usdPrice?: string,
   bgColor: string,
+  loading: boolean
 }) => {
   return (
     <Box
       sx={{
+        height:"130px",
         width: '300px',
         border: '2px solid #666',
         borderRadius: '10px',
@@ -225,7 +280,13 @@ const GasStat = ({
       <Box sx={{
         color: 'white', fontWeight: 'heading', fontSize: [3, 3, 5, 5]
       }}>
-        {gasPrice} <Text sx={{ color: '#fff', fontSize: '10px', lineHeight: '0', pb: '10px' }}>Gwei</Text>
+        {(loading) ? (
+          <Spinner sx={{ mt: '5px' }} size={42} />
+        ):(
+          <>
+            {gasPrice} <Text sx={{ color: '#fff', fontSize: '10px', lineHeight: '0', pb: '10px' }}>Gwei</Text>
+          </>
+        )}
       </Box>
     </Box>
   )
