@@ -258,7 +258,11 @@ const GasStat = ({
   return (
     <Box
       sx={{
-        height:"130px",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        height:["100px", "100px", "130px"],
         width: '300px',
         border: '2px solid #666',
         borderRadius: '10px',

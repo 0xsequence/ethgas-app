@@ -37,10 +37,6 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
       {networks.map((network) => {
         return (
           <option
-            style={{
-              color: 'black',
-              backgroundColor: 'background'
-            }}
             value={network.handle}
           >
             {network.title}
