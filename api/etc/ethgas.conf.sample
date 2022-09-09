@@ -10,10 +10,10 @@ listen          = "0.0.0.0:4444"
   jwt_secret    = "xxx"
 
 [networks]
-  mainnet       = { title = "Ethereum",      token = "ETH",    url = "https://etc/mainnet",        min_gas_price = 1_000_000_000, use_eip_1559 = true }
-  polygon       = { title = "Polygon",       token = "MATIC",  url = "https://etc/polygon",        min_gas_price = 30_000_000_000, use_eip_1559 = true }
-  arbitrum      = { title = "Arbitrum",      token = "ETH",    url = "https://etc/arbitrum",       min_gas_price = 100_000_000, use_eip_1559 = true }
-  arbitrum-nova = { title = "Arbitrum Nova", token = "ETH",    url = "https://etc/arbitrum-nova",  min_gas_price = 100_000_000, use_eip_1559 = true }
-  optimism      = { title = "Optimism",      token = "ETH",    url = "https://etc/optimism",       min_gas_price = 1_000_000, use_eip_1559 = true }
-  bsc           = { title = "BSC",           token = "BNB",    url = "https://etc/bsc",            min_gas_price = 1_000_000_000, use_eip_1559 = true }
-  avalanche     = { title = "Avalanche",     token = "AVAX",   url = "https://etc/avalanche",      min_gas_price = 1_000_000_000, use_eip_1559 = true }
+  mainnet       = { pos = 1,  title = "Ethereum",      token = "ETH",    url = "https://etc/mainnet",        min_gas_price = 1_000_000_000, use_eip_1559 = true }
+  polygon       = { pos = 2,  title = "Polygon",       token = "MATIC",  url = "https://etc/polygon",        min_gas_price = 30_000_000_000, use_eip_1559 = true }
+  arbitrum      = { pos = 3,  title = "Arbitrum",      token = "ETH",    url = "https://etc/arbitrum",       min_gas_price = 100_000_000, use_eip_1559 = true }
+  arbitrum-nova = { pos = 4,  title = "Arbitrum Nova", token = "ETH",    url = "https://etc/arbitrum-nova",  min_gas_price = 100_000_000, use_eip_1559 = true }
+  optimism      = { pos = 5,  title = "Optimism",      token = "ETH",    url = "https://etc/optimism",       min_gas_price = 1_000_000, use_eip_1559 = true }
+  bsc           = { pos = 6,  title = "BSC",           token = "BNB",    url = "https://etc/bsc",            min_gas_price = 1_000_000_000, use_eip_1559 = true }
+  avalanche     = { pos = 7,  title = "Avalanche",     token = "AVAX",   url = "https://etc/avalanche",      min_gas_price = 1_000_000_000, use_eip_1559 = true }

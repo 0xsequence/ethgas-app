@@ -3,6 +3,7 @@ package rpc
 import (
 	"context"
 	"net/http"
+	"sort"
 	"time"
 
 	"github.com/0xsequence/ethgas-app/config"
@@ -38,8 +39,13 @@ func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[str
 	networkList := []*proto.NetworkInfo{}
 	for chainHandle := range monitors {
 		chainInfo := providers.GetConfig(chainHandle)
-		networkList = append(networkList, &proto.NetworkInfo{Handle: chainHandle, Title: chainInfo.Title, Token: chainInfo.Token})
+		networkList = append(networkList, &proto.NetworkInfo{
+			Pos: chainInfo.Pos, Handle: chainHandle, Title: chainInfo.Title, Token: chainInfo.Token,
+		})
 	}
+	sort.Slice(networkList, func(i, j int) bool {
+		return networkList[i].Pos < networkList[j].Pos
+	})
 
 	s := &RPC{
 		Config:       cfg,

@@ -5,6 +5,7 @@ import "strings"
 type Config map[string]NetworkConfig
 
 type NetworkConfig struct {
+	Pos         int    `toml:"pos"`
 	Title       string `toml:"title"`
 	Token       string `toml:"token"`
 	URL         string `toml:"url"`

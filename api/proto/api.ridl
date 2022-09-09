@@ -25,6 +25,8 @@ message GasStat
   - min: float64
 
 message NetworkInfo
+  - pos: int
+    + json = -
   - handle: string
   - title: string
   - token: string
