@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@nivo/line": "^0.62.0",
+    "@radix-ui/react-popover": "^1.0.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.1",
     "emotion": "^10.0.27",

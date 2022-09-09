@@ -14,6 +14,7 @@ export const ChartRoute = () => {
   const routerStore = useStore<RouterStore>('router')
   const networks = useObservable(dataStore.networks)
   const network = useObservable(dataStore.network)
+  const networkTitle = useObservable(dataStore.networkTitle)
   const suggestedDatasetLoading = useObservable(dataStore.suggestedDatasetLoading)
   const actualDatasetLoading = useObservable(dataStore.actualDatasetLoading)
   const apiError = useObservable(dataStore.apiError)
@@ -162,8 +163,8 @@ export const ChartRoute = () => {
             onChange={(selectNetwork) => {
               routerStore.push(selectNetwork)
             }}
-            currentNetwork={network}
-            networks={networks}
+            currentNetwork={networkTitle}
+            networks={networks.filter(net => (net.handle !== network))}
           />
         </Box>
       </Box>
