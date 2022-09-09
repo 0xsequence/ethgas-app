@@ -68,3 +68,11 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 80
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+# NOTE: must put try_files below in /etc/nginx/conf.d/default.conf of this container..
+#
+# location / {
+#   root       /usr/share/nginx/html;
+#   index      index.html index.htm;
+#   try_files  $uri $uri/ /index.html;
+# }
