@@ -1,5 +1,6 @@
 import { display, DisplayProps, flex, FlexboxProps, position, PositionProps } from 'styled-system'
 import { Box as _Box, BoxProps as _BoxProps } from 'theme-ui'
+
 import { styled } from '~/style'
 
 export interface BoxProps extends _BoxProps, DisplayProps, FlexboxProps, PositionProps {

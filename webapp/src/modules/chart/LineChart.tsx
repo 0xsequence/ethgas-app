@@ -1,10 +1,11 @@
-import React from 'react'
 import { ResponsiveLine } from '@nivo/line'
+import React from 'react'
+
 import { DataMode } from '~/stores/DataStore'
 
 export const LineChart = ({ mode, data }) => {
   const xValues: string[] = []
-  for (let i=data[0].data.length-1; i > 0; i-=2) {
+  for (let i = data[0].data.length - 1; i > 0; i -= 2) {
     xValues.push(data[0].data[i].x)
   }
 
@@ -46,7 +47,7 @@ export const LineChart = ({ mode, data }) => {
         tickRotation: 0,
         legend: yLabel,
         legendOffset: -50,
-        legendPosition: 'middle',
+        legendPosition: 'middle'
       }}
       colors={['#FFC542', '#3ED598', '#FF565E']}
       theme={{
@@ -70,12 +71,11 @@ export const LineChart = ({ mode, data }) => {
             stroke: 'white'
           }
         },
-        legends: {
-        },
+        legends: {},
         grid: {
           line: {
             stroke: '#333',
-            strokeWidth: 2,
+            strokeWidth: 2
             // strokeDasharray: "4 4"
           }
         },

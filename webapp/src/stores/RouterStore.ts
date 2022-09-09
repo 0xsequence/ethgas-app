@@ -1,4 +1,5 @@
 import { History } from 'history'
+
 import { observable, RootStore } from '~/stores'
 
 export class RouterStore {
@@ -11,7 +12,7 @@ export class RouterStore {
   })
 
   scrollRetention: { [key: string]: number } = {}
-  
+
   redirectLocation = observable<string>('')
 
   constructor(private root: RootStore) {}

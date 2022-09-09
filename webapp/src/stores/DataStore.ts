@@ -1,5 +1,5 @@
-import { RootStore, observable } from '~/stores'
 import { SuggestedGasPrice, GasStat, NetworkInfo } from '~/lib/apiclient'
+import { RootStore, observable } from '~/stores'
 
 export enum DataMode {
   SUGGESTED = 'SUGGESTED',
@@ -9,7 +9,7 @@ export enum DataMode {
 export const MaxNumDataPoints = 70
 
 export class DataStore {
-  networks = observable<Array<NetworkInfo>|null>(null)
+  networks = observable<Array<NetworkInfo> | null>(null)
 
   network = observable('mainnet')
   networkTitle = observable('Ethereum')
@@ -26,9 +26,9 @@ export class DataStore {
   suggestedSlow = observable<number>(0)
 
   suggestedDataset: any[] = [
-    { 'id': 'slow', 'data': [] },
-    { 'id': 'standard', 'data': [] },
-    { 'id': 'fast', 'data': [] }
+    { id: 'slow', data: [] },
+    { id: 'standard', data: [] },
+    { id: 'fast', data: [] }
   ]
 
   actualMax = observable<number>(0)
@@ -36,9 +36,9 @@ export class DataStore {
   actualMin = observable<number>(0)
 
   actualDataset: any[] = [
-    { 'id': 'min', 'data': [] },
-    { 'id': 'average', 'data': [] },
-    { 'id': 'max', 'data': [] }
+    { id: 'min', data: [] },
+    { id: 'average', data: [] },
+    { id: 'max', data: [] }
   ]
 
   lastSuggestedPoll: number = 0
@@ -49,7 +49,6 @@ export class DataStore {
     const poll = () => {
       this.pollSuggested()
       this.pollActual()
-  
 
       // will trigger a re-render as it updates the set value
       this.updated.set(this.lastSuggestedPoll)
@@ -63,32 +62,32 @@ export class DataStore {
     try {
       const network = this.network.get()
       const api = this.root.api
-  
+
       let count = MaxNumDataPoints
       if (this.lastSuggestedPoll > 0) {
         count = 5
       }
-  
+
       const { suggestedGasPrices } = await api.allSuggestedGasPrices({ network: this.network.get(), count: count })
-  
+
       if (suggestedGasPrices.length === 0 || network !== this.network.get()) {
         return
       }
-      const suggestedGasPrice = suggestedGasPrices[suggestedGasPrices.length-1]
+      const suggestedGasPrice = suggestedGasPrices[suggestedGasPrices.length - 1]
       if (this.lastSuggestedPoll > 0 && this.lastSuggestedPoll === suggestedGasPrice.blockNum) {
         return
       }
-  
+
       const blockNum = suggestedGasPrice.blockNum
       this.lastSuggestedPoll = blockNum
-  
+
       this.suggestedFast.set(suggestedGasPrice.fast)
       this.suggestedStandard.set(suggestedGasPrice.standard)
       this.suggestedSlow.set(suggestedGasPrice.slow)
-  
+
       this.updateSuggestedDataset(suggestedGasPrices)
       this.suggestedDatasetLoading.set(false)
-    } catch(e) {
+    } catch (e) {
       console.error('An error occurred while fetching the suggested dataset')
       this.apiError.set(true)
     }
@@ -98,32 +97,32 @@ export class DataStore {
     try {
       const network = this.network.get()
       const api = this.root.api
-  
+
       let count = MaxNumDataPoints
       if (this.lastActualPoll > 0) {
         count = 5
       }
-  
+
       const { gasStats } = await api.allGasStats({ network: this.network.get(), count: count })
-  
+
       if (gasStats.length === 0 || network !== this.network.get()) {
         return
       }
-      const gasStat = gasStats[gasStats.length-1]
+      const gasStat = gasStats[gasStats.length - 1]
       if (this.lastActualPoll > 0 && this.lastActualPoll === gasStat.blockNum) {
         return
       }
-  
+
       const blockNum = gasStat.blockNum
       this.lastActualPoll = blockNum
-  
+
       this.actualMax.set(gasStat.max)
       this.actualAverage.set(gasStat.average)
       this.actualMin.set(gasStat.min)
-  
+
       this.updateActualDataset(gasStats)
       this.actualDatasetLoading.set(false)
-    } catch(e) {
+    } catch (e) {
       console.log('An error occurrred while fetching the actual dataset')
       this.apiError.set(true)
     }
@@ -131,7 +130,7 @@ export class DataStore {
 
   updateSuggestedDataset(data: SuggestedGasPrice[]) {
     const pushDataset = (set: SuggestedGasPrice[]) => {
-      for (let i=0; i < set.length; i++) {
+      for (let i = 0; i < set.length; i++) {
         const blockNum = set[i].blockNum
         this.suggestedDataset[0].data.push({
           x: `${blockNum}`,
@@ -153,13 +152,12 @@ export class DataStore {
     if (len === 0) {
       // Fresh dataset
       pushDataset(data)
-
     } else {
       // Existing dataset
-      const lastBlockNum = parseInt(this.suggestedDataset[0].data[len-1].x)
+      const lastBlockNum = parseInt(this.suggestedDataset[0].data[len - 1].x)
 
       let idx = -1
-      for (let i=0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         if (idx < 0 && data[i].blockNum > lastBlockNum) {
           idx = i
           break
@@ -173,9 +171,9 @@ export class DataStore {
 
     // truncate to max set
     if (this.suggestedDataset[0].data.length > MaxNumDataPoints) {
-      this.suggestedDataset[0].data.splice(0, Math.abs(MaxNumDataPoints-this.suggestedDataset[0].data.length))
-      this.suggestedDataset[1].data.splice(0, Math.abs(MaxNumDataPoints-this.suggestedDataset[1].data.length))
-      this.suggestedDataset[2].data.splice(0, Math.abs(MaxNumDataPoints-this.suggestedDataset[2].data.length))
+      this.suggestedDataset[0].data.splice(0, Math.abs(MaxNumDataPoints - this.suggestedDataset[0].data.length))
+      this.suggestedDataset[1].data.splice(0, Math.abs(MaxNumDataPoints - this.suggestedDataset[1].data.length))
+      this.suggestedDataset[2].data.splice(0, Math.abs(MaxNumDataPoints - this.suggestedDataset[2].data.length))
     }
 
     // will trigger a re-render as it updates the set value
@@ -185,7 +183,7 @@ export class DataStore {
 
   updateActualDataset(data: GasStat[]) {
     const pushDataset = (set: GasStat[]) => {
-      for (let i=0; i < set.length; i++) {
+      for (let i = 0; i < set.length; i++) {
         const blockNum = set[i].blockNum
         this.actualDataset[0].data.push({
           x: `${blockNum}`,
@@ -207,13 +205,12 @@ export class DataStore {
     if (len === 0) {
       // Fresh dataset
       pushDataset(data)
-
     } else {
       // Existing dataset
-      const lastBlockNum = parseInt(this.actualDataset[0].data[len-1].x)
+      const lastBlockNum = parseInt(this.actualDataset[0].data[len - 1].x)
 
       let idx = -1
-      for (let i=0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         if (idx < 0 && data[i].blockNum > lastBlockNum) {
           idx = i
           break
@@ -227,9 +224,9 @@ export class DataStore {
 
     // truncate to max set
     if (this.actualDataset[0].data.length > MaxNumDataPoints) {
-      this.actualDataset[0].data.splice(0, Math.abs(MaxNumDataPoints-this.actualDataset[0].data.length))
-      this.actualDataset[1].data.splice(0, Math.abs(MaxNumDataPoints-this.actualDataset[1].data.length))
-      this.actualDataset[2].data.splice(0, Math.abs(MaxNumDataPoints-this.actualDataset[2].data.length))
+      this.actualDataset[0].data.splice(0, Math.abs(MaxNumDataPoints - this.actualDataset[0].data.length))
+      this.actualDataset[1].data.splice(0, Math.abs(MaxNumDataPoints - this.actualDataset[1].data.length))
+      this.actualDataset[2].data.splice(0, Math.abs(MaxNumDataPoints - this.actualDataset[2].data.length))
     }
 
     // will trigger a re-render as it updates the set value
@@ -261,7 +258,7 @@ export class DataStore {
     this.suggestedDataset.forEach(dataset => {
       dataset.data = []
     })
-    
+
     this.lastSuggestedPoll = 0
     this.lastActualPoll = 0
 
@@ -272,15 +269,15 @@ export class DataStore {
     this.apiError.set(false)
   }
 
-  async fetchNetworks () {
+  async fetchNetworks() {
     if (!this.networks.get()) {
       try {
         const response = await this.root.api.listNetworks()
         this.networks.set(response.networks)
-      } catch(e) {
+      } catch (e) {
         console.error('Failed to fetch list of networks', e)
         this.apiError.set(true)
-      } 
+      }
     }
   }
 
@@ -290,4 +287,3 @@ export class DataStore {
     this.resetChart()
   }
 }
-

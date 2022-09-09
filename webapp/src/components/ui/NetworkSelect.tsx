@@ -1,16 +1,16 @@
-import * as Popover from '@radix-ui/react-popover';
+import * as Popover from '@radix-ui/react-popover'
 import React, { useState } from 'react'
+
 import ArrowDown from '~/components/assets/svg/ArrowDown'
 import { NetworkInfo } from '~/lib/apiclient'
 import { Box, Text } from '~/style'
 
 interface NetworkSelectProps {
   networks: NetworkInfo[]
-  onChange: (val:string) => void
+  onChange: (val: string) => void
   currentNetwork: string
   showDefaultOption?: boolean
 }
-
 
 export const NetworkSelect = (props: NetworkSelectProps) => {
   const { networks, onChange, currentNetwork, showDefaultOption = false } = props
@@ -19,7 +19,8 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
   const width = showDefaultOption ? '300px' : '180px'
 
   return (
-    <Popover.Root open={open}
+    <Popover.Root
+      open={open}
       sx={{
         backgroundColor: 'green'
       }}
@@ -28,39 +29,39 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
         data-is-trigger="true"
         asChild
         onClick={() => setOpen(!open)}
-        sx={(theme) => {
-          return ({
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width,
-              padding: '4px 12px',
-              backgroundColor: open ? theme?.colors?.secondary : theme?.colors?.background,
-              border: `2px solid ${theme?.colors?.secondary}`,
-              '&:hover': {
-                cursor: 'pointer',
-                backgroundColor: theme?.colors?.secondary
-              },
-              borderRadius: '10px',
-              'svg': {
-                height: '20px',
-                width: '20px',
-                fill: 'white',
-                transform: open ? 'rotate(180deg)' : '',
-                transition: '0.3s',
-              },
-            })
+        sx={theme => {
+          return {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width,
+            padding: '4px 12px',
+            backgroundColor: open ? theme?.colors?.secondary : theme?.colors?.background,
+            border: `2px solid ${theme?.colors?.secondary}`,
+            '&:hover': {
+              cursor: 'pointer',
+              backgroundColor: theme?.colors?.secondary
+            },
+            borderRadius: '10px',
+            svg: {
+              height: '20px',
+              width: '20px',
+              fill: 'white',
+              transform: open ? 'rotate(180deg)' : '',
+              transition: '0.3s'
+            }
           }
-        }
+        }}
       >
         <Box>
-          <Text sx={{ userSelect: 'none' }}>{showDefaultOption ? 'Select a network...' : currentNetwork}</Text><ArrowDown />
+          <Text sx={{ userSelect: 'none' }}>{showDefaultOption ? 'Select a network...' : currentNetwork}</Text>
+          <ArrowDown />
         </Box>
       </Popover.Trigger>
       <Popover.Content
         asChild
         side="bottom"
-        onPointerDownOutside={(e) => {
+        onPointerDownOutside={e => {
           // @ts-ignore-next-line
           let isTrigger = e?.target?.dataset?.isTrigger
           // @ts-ignore-next-line
@@ -70,7 +71,7 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
             }
           })
 
-          if(!isTrigger) {
+          if (!isTrigger) {
             setOpen(false)
           }
         }}
@@ -81,11 +82,11 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
         }}
       >
         <Box>
-          {networks.map((network) => {
+          {networks.map(network => {
             return (
               <Box
                 key={network.handle}
-                sx={(theme) => ({
+                sx={theme => ({
                   width,
                   zIndex: 999,
                   marginTop: '5px',
@@ -107,13 +108,10 @@ export const NetworkSelect = (props: NetworkSelectProps) => {
                   onChange(network.handle)
                 }}
               >
-                <Text sx={{ width: '100%', textAlign: 'left', userSelect: 'none' }}>
-                  {network.title}
-                </Text>
+                <Text sx={{ width: '100%', textAlign: 'left', userSelect: 'none' }}>{network.title}</Text>
               </Box>
             )
-          })
-        }
+          })}
         </Box>
       </Popover.Content>
     </Popover.Root>

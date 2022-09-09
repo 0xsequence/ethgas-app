@@ -18,9 +18,7 @@ export const HomeRoute = () => {
     const savedNetworkHandle = localStorage.getItem(SAVED_NETWORK_HANDLE)
     if (savedNetworkHandle) {
       routerStore.push(`/${savedNetworkHandle}`, { replace: true })
-    } else if(networks) (
-      routerStore.push(`/${networks[0].handle}`)
-    )
+    } else if (networks) routerStore.push(`/${networks[0].handle}`)
   }, [networks])
 
   return null

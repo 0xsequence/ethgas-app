@@ -5,14 +5,13 @@
 // Do not edit by hand. Update your webrpc schema and re-generate.
 
 // WebRPC description and code-gen version
-export const WebRPCVersion = "v1"
+export const WebRPCVersion = 'v1'
 
 // Schema version of your RIDL schema
-export const WebRPCSchemaVersion = "v0.2.0"
+export const WebRPCSchemaVersion = 'v0.2.0'
 
 // Schema hash generated from your RIDL schema
-export const WebRPCSchemaHash = "7f3856d73cf254b2b4f969256ebf612988ad9031"
-
+export const WebRPCSchemaHash = '7f3856d73cf254b2b4f969256ebf612988ad9031'
 
 //
 // Types
@@ -56,30 +55,27 @@ export interface ETHGas {
   gasPriceHistory(args: GasPriceHistoryArgs, headers?: object): Promise<GasPriceHistoryReturn>
 }
 
-export interface PingArgs {
-}
+export interface PingArgs {}
 
 export interface PingReturn {
-  ok: boolean  
+  ok: boolean
 }
-export interface VersionArgs {
-}
+export interface VersionArgs {}
 
 export interface VersionReturn {
-  version: Version  
+  version: Version
 }
-export interface ListNetworksArgs {
-}
+export interface ListNetworksArgs {}
 
 export interface ListNetworksReturn {
-  networks: Array<NetworkInfo>  
+  networks: Array<NetworkInfo>
 }
 export interface SuggestedGasPriceArgs {
   network: string
 }
 
 export interface SuggestedGasPriceReturn {
-  suggestedGasPrice: SuggestedGasPrice  
+  suggestedGasPrice: SuggestedGasPrice
 }
 export interface AllSuggestedGasPricesArgs {
   network: string
@@ -87,7 +83,7 @@ export interface AllSuggestedGasPricesArgs {
 }
 
 export interface AllSuggestedGasPricesReturn {
-  suggestedGasPrices: Array<SuggestedGasPrice>  
+  suggestedGasPrices: Array<SuggestedGasPrice>
 }
 export interface AllGasStatsArgs {
   network: string
@@ -95,18 +91,16 @@ export interface AllGasStatsArgs {
 }
 
 export interface AllGasStatsReturn {
-  gasStats: Array<GasStat>  
+  gasStats: Array<GasStat>
 }
 export interface GasPriceHistoryArgs {
   network: string
 }
 
 export interface GasPriceHistoryReturn {
-  gasPriceHistory: {[key: number]: Array<number>}  
+  gasPriceHistory: { [key: number]: Array<number> }
 }
 
-
-  
 //
 // Client
 //
@@ -123,101 +117,82 @@ export class ETHGas implements ETHGas {
   private url(name: string): string {
     return this.hostname + this.path + name
   }
-  
+
   ping = (headers?: object): Promise<PingReturn> => {
-    return this.fetch(
-      this.url('Ping'),
-      createHTTPRequest({}, headers)
-      ).then((res) => {
+    return this.fetch(this.url('Ping'), createHTTPRequest({}, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          ok: <boolean>(_data.ok)
+          ok: <boolean>_data.ok
         }
       })
     })
   }
-  
+
   version = (headers?: object): Promise<VersionReturn> => {
-    return this.fetch(
-      this.url('Version'),
-      createHTTPRequest({}, headers)
-      ).then((res) => {
+    return this.fetch(this.url('Version'), createHTTPRequest({}, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          version: <Version>(_data.version)
+          version: <Version>_data.version
         }
       })
     })
   }
-  
+
   listNetworks = (headers?: object): Promise<ListNetworksReturn> => {
-    return this.fetch(
-      this.url('ListNetworks'),
-      createHTTPRequest({}, headers)
-      ).then((res) => {
+    return this.fetch(this.url('ListNetworks'), createHTTPRequest({}, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          networks: <Array<NetworkInfo>>(_data.networks)
+          networks: <Array<NetworkInfo>>_data.networks
         }
       })
     })
   }
-  
+
   suggestedGasPrice = (args: SuggestedGasPriceArgs, headers?: object): Promise<SuggestedGasPriceReturn> => {
-    return this.fetch(
-      this.url('SuggestedGasPrice'),
-      createHTTPRequest(args, headers)).then((res) => {
+    return this.fetch(this.url('SuggestedGasPrice'), createHTTPRequest(args, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          suggestedGasPrice: <SuggestedGasPrice>(_data.suggestedGasPrice)
+          suggestedGasPrice: <SuggestedGasPrice>_data.suggestedGasPrice
         }
       })
     })
   }
-  
+
   allSuggestedGasPrices = (args: AllSuggestedGasPricesArgs, headers?: object): Promise<AllSuggestedGasPricesReturn> => {
-    return this.fetch(
-      this.url('AllSuggestedGasPrices'),
-      createHTTPRequest(args, headers)).then((res) => {
+    return this.fetch(this.url('AllSuggestedGasPrices'), createHTTPRequest(args, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          suggestedGasPrices: <Array<SuggestedGasPrice>>(_data.suggestedGasPrices)
+          suggestedGasPrices: <Array<SuggestedGasPrice>>_data.suggestedGasPrices
         }
       })
     })
   }
-  
+
   allGasStats = (args: AllGasStatsArgs, headers?: object): Promise<AllGasStatsReturn> => {
-    return this.fetch(
-      this.url('AllGasStats'),
-      createHTTPRequest(args, headers)).then((res) => {
+    return this.fetch(this.url('AllGasStats'), createHTTPRequest(args, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          gasStats: <Array<GasStat>>(_data.gasStats)
+          gasStats: <Array<GasStat>>_data.gasStats
         }
       })
     })
   }
-  
+
   gasPriceHistory = (args: GasPriceHistoryArgs, headers?: object): Promise<GasPriceHistoryReturn> => {
-    return this.fetch(
-      this.url('GasPriceHistory'),
-      createHTTPRequest(args, headers)).then((res) => {
+    return this.fetch(this.url('GasPriceHistory'), createHTTPRequest(args, headers)).then(res => {
       return buildResponse(res).then(_data => {
         return {
-          gasPriceHistory: <{[key: number]: Array<number>}>(_data.gasPriceHistory)
+          gasPriceHistory: <{ [key: number]: Array<number> }>_data.gasPriceHistory
         }
       })
     })
   }
-  
 }
 
-  
 export interface WebRPCError extends Error {
   code: string
   msg: string
-	status: number
+  status: number
 }
 
 const createHTTPRequest = (body: object = {}, headers: object = {}): object => {
@@ -233,7 +208,7 @@ const buildResponse = (res: Response): Promise<any> => {
     let data
     try {
       data = JSON.parse(text)
-    } catch(err) {
+    } catch (err) {
       throw { code: 'unknown', msg: `expecting JSON, got: ${text}`, status: res.status } as WebRPCError
     }
     if (!res.ok) {
