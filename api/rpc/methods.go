@@ -137,7 +137,9 @@ func formatGwei(wei *big.Int) float64 {
 func formatFloat64(n float64) float64 {
 	if n >= 1 {
 		return float64(uint64(n)) // truncate decimals
-	} else {
+	} else if n >= 0.01 {
 		return math.Round(n*100) / 100 // 2 decimal places
+	} else {
+		return math.Round(n*1000) / 1000 // 3 decimal places
 	}
 }

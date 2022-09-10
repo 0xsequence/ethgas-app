@@ -64,7 +64,7 @@ func (g *GasTracker) Main() error {
 			gasPrices := []float64{}
 			for _, txn := range txns {
 				gp := txn.GasPrice().Uint64()
-				if gp <= 1e8 {
+				if gp < 1e6 {
 					continue // skip prices which are outliers / "deals with miner"
 				}
 				gasPrices = append(gasPrices, float64(txn.GasPrice().Uint64())/float64(1e9))
