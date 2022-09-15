@@ -153,7 +153,8 @@ export const ChartRoute = () => {
           pb: [2, 2, 4],
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'flex-end'
+          alignItems: ['center', 'center', 'flex-end'],
+          flexDirection: ['column', 'column', 'row']
         }}
       >
         <Text sx={{ margin: 'auto 0' }}>{networkToken} Gas Price Gauge &nbsp;</Text>
@@ -164,7 +165,8 @@ export const ChartRoute = () => {
             justifyContent: 'center',
             alignItems: 'center',
             ml: '5px',
-            mb: '-6px'
+            mb: ['10px', '10px', null],
+            mt: ['10px', '10px', null]
           }}
         >
           <NetworkSelect
