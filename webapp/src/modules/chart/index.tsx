@@ -1,4 +1,3 @@
-import { ethers } from 'ethers'
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { Spinner } from 'theme-ui'
