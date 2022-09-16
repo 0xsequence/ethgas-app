@@ -14,6 +14,7 @@ export class DataStore {
   network = observable('mainnet')
   networkTitle = observable('Ethereum')
   networkToken = observable('ETH')
+  tokenPriceUSD = observable(0)
 
   suggestedDatasetLoading = observable(true)
   actualDatasetLoading = observable(true)
@@ -47,9 +48,6 @@ export class DataStore {
   updated = observable<number>(0)
 
   constructor(private root: RootStore) {
-    // TODO: delete...for testing only
-    this.fetchPriceUSD(137)
-
     const poll = () => {
       this.pollSuggested()
       this.pollActual()
@@ -279,7 +277,7 @@ export class DataStore {
         chainId: String(chainId)
       })
 
-      console.log('price response...', price)
+      this.tokenPriceUSD.set(price.priceUSD.price)
     } catch(e) {
       console.error('Failed to fetch price', e)
     }
