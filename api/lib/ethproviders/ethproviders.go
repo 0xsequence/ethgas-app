@@ -12,6 +12,7 @@ type Providers struct {
 type ChainInfo struct {
 	Title  string `json:"title"`
 	Handle string `json:"handle"`
+	ChainId uint 	`json:"chainId"`
 }
 
 func NewProviders(cfg Config) (*Providers, error) {

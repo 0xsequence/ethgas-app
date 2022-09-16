@@ -14,6 +14,7 @@ export class DataStore {
   network = observable('mainnet')
   networkTitle = observable('Ethereum')
   networkToken = observable('ETH')
+  tokenPriceUSD = observable(0)
 
   suggestedDatasetLoading = observable(true)
   actualDatasetLoading = observable(true)
@@ -268,6 +269,18 @@ export class DataStore {
     this.suggestedDatasetLoading.set(true)
     this.actualDatasetLoading.set(true)
     this.apiError.set(false)
+  }
+
+  async fetchPriceUSD(chainId: number) {
+    try {
+      const price = await this.root.api.getPriceUSD({
+        chainId: String(chainId)
+      })
+
+      this.tokenPriceUSD.set(price.priceUSD.price)
+    } catch(e) {
+      console.error('Failed to fetch price', e)
+    }
   }
 
   async fetchNetworks() {

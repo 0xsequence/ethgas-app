@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { Spinner } from 'theme-ui'
 
@@ -20,9 +20,12 @@ export const ChartRoute = () => {
   const suggestedDatasetLoading = useObservable(dataStore.suggestedDatasetLoading)
   const actualDatasetLoading = useObservable(dataStore.actualDatasetLoading)
   const apiError = useObservable(dataStore.apiError)
+  const priceUSD = useObservable(dataStore.tokenPriceUSD)
   const { networkId } = useParams<{ networkId: string }>()
 
-  const loading = suggestedDatasetLoading || actualDatasetLoading
+  const [priceLoading, setPriceLoading] = useState(false)
+
+  const loading = suggestedDatasetLoading || actualDatasetLoading || priceLoading
 
   const currentSupportedNetwork = networks && networks.find(network => network.handle === networkId)
 
@@ -34,8 +37,22 @@ export const ChartRoute = () => {
     if (currentSupportedNetwork) {
       localStorage.setItem(SAVED_NETWORK_HANDLE, currentSupportedNetwork.handle)
       dataStore.setNetwork(currentSupportedNetwork.handle, currentSupportedNetwork.title, currentSupportedNetwork.token)
+      fetchPrice()
     }
   }, [networks, networkId])
+
+  const fetchPrice = async () => {
+    const foundNetwork = networks?.find(net => net.handle === currentSupportedNetwork?.handle)
+    if (foundNetwork) {
+      setPriceLoading(true)
+      try {
+        await dataStore.fetchPriceUSD(foundNetwork.chainId)
+      } catch(e) {
+        console.error('Failed to fetch price...', e)
+      }
+      setPriceLoading(false)
+    }
+  }
 
   if (!networks) {
     return null
@@ -196,17 +213,17 @@ export const ChartRoute = () => {
       >
         {dataStore.mode.get() === DataMode.SUGGESTED && (
           <>
-            <GasStat label={'Fast'} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} loading={loading} />
-            <GasStat label={'Standard'} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} loading={loading} />
-            <GasStat label={'Slow'} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} loading={loading} />
+            <GasStat usdPrice={priceUSD} label={'Fast'} gasPrice={dataStore.suggestedFast.get()} bgColor={'red'} loading={loading} />
+            <GasStat usdPrice={priceUSD} label={'Standard'} gasPrice={dataStore.suggestedStandard.get()} bgColor={'green'} loading={loading} />
+            <GasStat usdPrice={priceUSD} label={'Slow'} gasPrice={dataStore.suggestedSlow.get()} bgColor={'yellow'} loading={loading} />
           </>
         )}
 
         {dataStore.mode.get() === DataMode.ACTUAL && (
           <>
-            <GasStat label={'Max'} gasPrice={dataStore.actualMax.get()} bgColor={'red'} loading={loading} />
-            <GasStat label={'Average'} gasPrice={dataStore.actualAverage.get()} bgColor={'green'} loading={loading} />
-            <GasStat label={'Min'} gasPrice={dataStore.actualMin.get()} bgColor={'yellow'} loading={loading} />
+            <GasStat usdPrice={priceUSD} label={'Max'} gasPrice={dataStore.actualMax.get()} bgColor={'red'} loading={loading} />
+            <GasStat usdPrice={priceUSD} label={'Average'} gasPrice={dataStore.actualAverage.get()} bgColor={'green'} loading={loading} />
+            <GasStat usdPrice={priceUSD} label={'Min'} gasPrice={dataStore.actualMin.get()} bgColor={'yellow'} loading={loading} />
           </>
         )}
       </Flex>
@@ -272,10 +289,21 @@ const GasStat = ({
 }: {
   label: string
   gasPrice: number
-  usdPrice?: string
+  usdPrice: number
   bgColor: string
   loading: boolean
 }) => {
+  const getPricePerTransfer = useCallback(() => {
+    const TRANSFER_GAS_COST = 21000
+    const GWEI_IN_ETH = 1000000000
+    const price = TRANSFER_GAS_COST * usdPrice * gasPrice / GWEI_IN_ETH
+
+    return price.toFixed(5)
+  }, [gasPrice, usdPrice])
+
+
+  const pricePerTransfer = getPricePerTransfer()
+
   return (
     <Box
       sx={{
@@ -304,6 +332,25 @@ const GasStat = ({
         }}
       >
         {label}
+        {
+          !loading && (
+            <Box
+              sx={{
+                color: '#000',
+                fontSize: '10px',
+                lineHeight: '0',
+                mb: '10px',
+                mt: '5px',
+                display: 'flex',
+                flexDirection: ['column', 'column', 'row'],
+                gap: ['12px', '12px', '0px']
+              }}
+            >
+              <Text sx={{ display: 'inline-block' }}>{`$${pricePerTransfer}`}&nbsp;</Text>
+              <Text sx={{ display: 'inline-block' }}>/ Transfer</Text>
+            </Box>
+          )
+        }
       </Box>
 
       <Box

@@ -40,7 +40,7 @@ func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[str
 	for chainHandle := range monitors {
 		chainInfo := providers.GetConfig(chainHandle)
 		networkList = append(networkList, &proto.NetworkInfo{
-			Pos: chainInfo.Pos, Handle: chainHandle, Title: chainInfo.Title, Token: chainInfo.Token,
+			Pos: chainInfo.Pos, Handle: chainHandle, Title: chainInfo.Title, Token: chainInfo.Token, ChainId: uint64(chainInfo.ChainId),
 		})
 	}
 	sort.Slice(networkList, func(i, j int) bool {
