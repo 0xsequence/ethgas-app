@@ -18,6 +18,12 @@ func (s *RPC) ListNetworks(ctx context.Context) ([]*proto.NetworkInfo, error) {
 }
 
 func (s *RPC) GetPriceUSD(ctx context.Context, chainId string) (*proto.PriceUSD, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			s.Log.Info().Msgf("A panic occurred in GetPriceUSD: %s", err)
+		}
+	}()
+
 	url := s.Config.Api.Get_Price
 	
 	jsonStr := []byte(`{"tokens":[{"chainId":` + chainId +  `,"contractAddress":"0x0x0000000000000000000000000000000000000000"}]}`)
