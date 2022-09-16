@@ -1,9 +1,13 @@
 package rpc
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"io/ioutil"
 	"math"
 	"math/big"
+	"net/http"
 
 	"github.com/0xsequence/ethgas-app/proto"
 	"github.com/0xsequence/ethgas-app/tracker"
@@ -11,6 +15,61 @@ import (
 
 func (s *RPC) ListNetworks(ctx context.Context) ([]*proto.NetworkInfo, error) {
 	return s.networkList, nil
+}
+
+func (s *RPC) GetPriceUSD(ctx context.Context, chainId string) (*proto.PriceUSD, error) {
+	url := s.Config.Api.Get_Price
+	
+	jsonStr := []byte(`{"tokens":[{"chainId":` + chainId +  `,"contractAddress":"0x0x0000000000000000000000000000000000000000"}]}`)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+			return nil, err
+	}
+	defer resp.Body.Close()
+
+	jsonDataFromHttp, err := ioutil.ReadAll(resp.Body)
+
+	type TokenInfo struct {
+		ChainId					int
+		ContractAddress	string
+		TokenId					int				
+	}
+
+	type PriceInfo struct {
+		Currency	string
+		Value			float64
+	}
+
+	type CoinInfo struct {
+		Price						PriceInfo
+		Price24hChange	PriceInfo
+		Token						TokenInfo
+		UpdatedAt				string
+	}
+
+	type GetCoinPricesResponse struct {
+		TokenPrices	[]CoinInfo
+	}
+
+	var jsonData GetCoinPricesResponse
+
+	err = json.Unmarshal([]byte(jsonDataFromHttp), &jsonData)
+
+	if err != nil {
+		return nil, err
+	}
+
+	priceUSD := jsonData.TokenPrices[0].Price.Value
+
+	response := &proto.PriceUSD {
+		Price: priceUSD,
+	}
+	
+	return response, nil
 }
 
 func (s *RPC) SuggestedGasPrice(ctx context.Context, network string) (*proto.SuggestedGasPrice, error) {

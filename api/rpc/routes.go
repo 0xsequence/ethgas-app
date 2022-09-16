@@ -53,6 +53,15 @@ func routesV1(rpc *RPC) chi.Router {
 		respondJSON(w, data)
 	})
 
+	r.Get("/{chainId}/price", func(w http.ResponseWriter, r *http.Request) {
+		data, err := rpc.GetPriceUSD(r.Context(), chi.URLParam(r, "chainId"))
+		if err != nil {
+			respondJSON(w, err)
+			return
+		}
+		respondJSON(w, data)
+	})
+
 	return r
 }
 

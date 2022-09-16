@@ -47,6 +47,9 @@ export class DataStore {
   updated = observable<number>(0)
 
   constructor(private root: RootStore) {
+    // TODO: delete...for testing only
+    this.fetchPriceUSD(137)
+
     const poll = () => {
       this.pollSuggested()
       this.pollActual()
@@ -268,6 +271,18 @@ export class DataStore {
     this.suggestedDatasetLoading.set(true)
     this.actualDatasetLoading.set(true)
     this.apiError.set(false)
+  }
+
+  async fetchPriceUSD(chainId: number) {
+    try {
+      const price = await this.root.api.getPriceUSD({
+        chainId: String(chainId)
+      })
+
+      console.log('price response...', price)
+    } catch(e) {
+      console.error('Failed to fetch price', e)
+    }
   }
 
   async fetchNetworks() {

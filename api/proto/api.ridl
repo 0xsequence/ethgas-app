@@ -30,12 +30,17 @@ message NetworkInfo
   - handle: string
   - title: string
   - token: string
+  - chainId: uint64
+
+message PriceUSD
+  - price: float64
 
 service ETHGas
   - Ping() => (ok: bool)
   - Version() => (version: Version)
 
   - ListNetworks() => (networks: []NetworkInfo)
+  - GetPriceUSD(chainId: string) => (priceUSD: PriceUSD)
   - SuggestedGasPrice(network: string) => (suggestedGasPrice: SuggestedGasPrice)
   - AllSuggestedGasPrices(network: string, count?: uint) => (suggestedGasPrices: []SuggestedGasPrice)
   - AllGasStats(network: string, count?: uint) => (gasStats: []GasStat)

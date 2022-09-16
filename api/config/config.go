@@ -18,6 +18,12 @@ type Config struct {
 	Auth    Auth          `toml:"auth"`
 
 	Networks ethproviders.Config `toml:"networks"`
+
+	Api ApiConfig `toml:"api"`
+}
+
+type ApiConfig struct {
+	Get_Price string `toml:"get_price"`
 }
 
 type LoggingConfig struct {
