@@ -6,9 +6,9 @@
   "license": "none",
   "scripts": {
     "start": "yarn dev",
-    "dev": "webpack-dev-server --mode development --progress --color --config config/webpack/webpack.config.local.js",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider webpack-dev-server --mode development --progress --color --config config/webpack/webpack.config.local.js",
     "dist": "yarn dist:clean && yarn dist:build",
-    "dist:build": "webpack --mode production --color --config config/webpack/webpack.config.dist.js",
+    "dist:build": "NODE_OPTIONS=--openssl-legacy-provider webpack --mode production --color --config config/webpack/webpack.config.dist.js",
     "dist:clean": "rimraf ./dist",
     "dist:stats": "serve -l 5555 ./dist/.stats",
     "lint": "eslint -c .eslintrc.js './src/**/*.{ts,tsx}'",

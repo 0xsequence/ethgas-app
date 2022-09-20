@@ -6,6 +6,7 @@ etc/ethgas.conf
 api/etc/ethgas.conf
 
 webapp/node_modules
+webapp/dist
 
 # Ignore everything in vendor/, except for certain files.
 # LICENSE and COPYING. Ignore Go tests.
