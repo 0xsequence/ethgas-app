@@ -1,7 +1,7 @@
 #
 # Builder pre-image
 #
-FROM node:12-buster as builder
+FROM node:18-buster as builder
 
 # Setup node
 RUN apt-get update && \
