@@ -23,7 +23,7 @@ type Config struct {
 }
 
 type ApiConfig struct {
-	Get_Price string `toml:"get_price"`
+	GetPrice string `toml:"get_price"`
 }
 
 type LoggingConfig struct {

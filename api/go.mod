@@ -26,6 +26,7 @@ require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
+	github.com/goware/cachestore v0.3.1 // indirect
 	github.com/goware/statik v0.2.0 // indirect
 	github.com/goware/superr v0.0.2 // indirect
 	github.com/hashicorp/golang-lru v0.5.5-0.20200511160909-eb529947af53 // indirect

@@ -173,6 +173,8 @@ github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5m
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1/go.mod h1:wJfORRmW1u3UXTncJ5qlYoELFm8eSnnEO6hX4iZ3EWY=
 github.com/gorilla/websocket v1.5.0 h1:PPwGk2jz7EePpoHN/+ClbZu8SPxiqlu12wZP/3sWmnc=
 github.com/gorilla/websocket v1.5.0/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/goware/cachestore v0.3.1 h1:c17LIMGVM/Y4HBzLIHNuR3FFkySYr3eVoYgT53U4Fl4=
+github.com/goware/cachestore v0.3.1/go.mod h1:ifyKCgoWJDpJneKC8YUryjgiRy7JnEgbkpe/FpgR6BA=
 github.com/goware/rerun v0.0.4 h1:qPw4HgDhcDiV8CWc4JQFPkXnWRd+IuowMqOkgQ9pZjs=
 github.com/goware/rerun v0.0.4/go.mod h1:2XMWAz6KyEA98DAsOSJbaMmvyP8KwKImqe5C3B1ttMM=
 github.com/goware/statik v0.2.0 h1:2dKnJIawSr/qbd4TdSgRtNc6mdVZrTOR56aSiL47460=

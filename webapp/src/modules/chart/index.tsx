@@ -301,7 +301,6 @@ const GasStat = ({
     return price.toFixed(5)
   }, [gasPrice, usdPrice])
 
-
   const pricePerTransfer = getPricePerTransfer()
 
   return (

@@ -17,6 +17,8 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/go-chi/httplog"
 	"github.com/go-chi/stampede"
+	"github.com/goware/cachestore"
+	"github.com/goware/cachestore/memlru"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -33,6 +35,7 @@ type RPC struct {
 	GasTrackers  map[string]*tracker.GasTracker
 
 	networkList []*proto.NetworkInfo
+	priceCache  cachestore.Store[float64]
 }
 
 func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[string]*ethmonitor.Monitor, gasGauges map[string]*ethgas.GasGauge, gasTrackers map[string]*tracker.GasTracker) (*RPC, error) {
@@ -47,6 +50,11 @@ func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[str
 		return networkList[i].Pos < networkList[j].Pos
 	})
 
+	priceCache, err := memlru.NewWithSize[float64](100, cachestore.WithDefaultKeyExpiry(30*time.Second))
+	if err != nil {
+		return nil, err
+	}
+
 	s := &RPC{
 		Config:       cfg,
 		Log:          log.With().Str("module", "rpc").Logger(),
@@ -56,6 +64,7 @@ func New(cfg *config.Config, providers *ethproviders.Providers, monitors map[str
 		ETHGasGauges: gasGauges,
 		GasTrackers:  gasTrackers,
 		networkList:  networkList,
+		priceCache:   priceCache,
 	}
 	return s, nil
 }

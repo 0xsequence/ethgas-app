@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"math"
 	"math/big"
@@ -17,48 +18,53 @@ func (s *RPC) ListNetworks(ctx context.Context) ([]*proto.NetworkInfo, error) {
 	return s.networkList, nil
 }
 
-func (s *RPC) GetPriceUSD(ctx context.Context, chainId string) (*proto.PriceUSD, error) {
-	defer func() {
-		if err := recover(); err != nil {
-			s.Log.Info().Msgf("A panic occurred in GetPriceUSD: %s", err)
-		}
-	}()
+func (s *RPC) GetPriceUSD(ctx context.Context, chainID string) (*proto.PriceUSD, error) {
+	// Attempt to fetch from cache
+	cacheKey := fmt.Sprintf("price:%s", chainID)
+	priceUSD, exists, err := s.priceCache.Get(ctx, cacheKey)
+	if err != nil {
+		return nil, proto.WrapFailf(err, "failed to fetch from cache")
+	}
+	if exists {
+		return &proto.PriceUSD{Price: priceUSD}, nil
+	}
 
-	url := s.Config.Api.Get_Price
-	
-	jsonStr := []byte(`{"tokens":[{"chainId":` + chainId +  `,"contractAddress":"0x0x0000000000000000000000000000000000000000"}]}`)
+	// Fetch from API
+	url := s.Config.Api.GetPrice
+
+	jsonStr := []byte(`{"tokens":[{"chainId":` + chainID + `,"contractAddress":"0x0x0000000000000000000000000000000000000000"}]}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-			return nil, err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	jsonDataFromHttp, err := ioutil.ReadAll(resp.Body)
 
 	type TokenInfo struct {
-		ChainId					int
-		ContractAddress	string
-		TokenId					int				
+		ChainId         int
+		ContractAddress string
+		TokenId         int
 	}
 
 	type PriceInfo struct {
-		Currency	string
-		Value			float64
+		Currency string
+		Value    float64
 	}
 
 	type CoinInfo struct {
-		Price						PriceInfo
-		Price24hChange	PriceInfo
-		Token						TokenInfo
-		UpdatedAt				string
+		Price          PriceInfo
+		Price24hChange PriceInfo
+		Token          TokenInfo
+		UpdatedAt      string
 	}
 
 	type GetCoinPricesResponse struct {
-		TokenPrices	[]CoinInfo
+		TokenPrices []CoinInfo
 	}
 
 	var jsonData GetCoinPricesResponse
@@ -69,12 +75,18 @@ func (s *RPC) GetPriceUSD(ctx context.Context, chainId string) (*proto.PriceUSD,
 		return nil, err
 	}
 
-	priceUSD := jsonData.TokenPrices[0].Price.Value
+	priceUSD = jsonData.TokenPrices[0].Price.Value
 
-	response := &proto.PriceUSD {
+	// save in cache
+	err = s.priceCache.Set(ctx, cacheKey, priceUSD)
+	if err != nil {
+		return nil, proto.WrapFailf(err, "failed to save in cache")
+	}
+
+	response := &proto.PriceUSD{
 		Price: priceUSD,
 	}
-	
+
 	return response, nil
 }
 
