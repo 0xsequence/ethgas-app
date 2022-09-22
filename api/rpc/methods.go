@@ -75,6 +75,10 @@ func (s *RPC) GetPriceUSD(ctx context.Context, chainID string) (*proto.PriceUSD,
 		return nil, err
 	}
 
+	if len(jsonData.TokenPrices) == 0 {
+		return nil, proto.Failf("failed to fetch price")
+	}
+
 	priceUSD = jsonData.TokenPrices[0].Price.Value
 
 	// save in cache
