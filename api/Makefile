@@ -56,7 +56,7 @@ copy-sample-config:
 
 define run
 	@go run github.com/goware/rerun/cmd/rerun -watch ./ -ignore vendor bin tests -run \
-		sh -c 'GOGC=off GO111MODULE=$(GOMODULES) go build -o ./bin/$(1) ./cmd/$(1) && ./bin/$(1) --config=./etc/$(1).conf'
+		'GOGC=off GO111MODULE=$(GOMODULES) go build -o ./bin/$(1) ./cmd/$(1) && ./bin/$(1) --config=./etc/$(1).conf'
 endef
 
 run:

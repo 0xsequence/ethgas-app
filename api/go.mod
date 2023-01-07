@@ -1,5 +1,9 @@
 module github.com/0xsequence/ethgas-app
 
+// replace github.com/0xsequence/ethkit => /Users/peter/Dev/0xsequence/ethkit
+
+// replace github.com/goware/rerun => /Users/peter/Dev/go/src/github.com/goware/rerun
+
 go 1.18
 
 require (
@@ -11,7 +15,7 @@ require (
 	github.com/go-chi/stampede v0.5.1
 	github.com/goware/cachestore v0.6.0
 	github.com/goware/logadapter-zerolog v0.1.0
-	github.com/goware/rerun v0.0.4
+	github.com/goware/rerun v0.0.7
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/cobra v1.6.1
 	github.com/webrpc/webrpc v0.6.0
@@ -24,7 +28,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/deckarep/golang-set v1.8.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.1.0 // indirect
-	github.com/fsnotify/fsnotify v1.5.1 // indirect
+	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
