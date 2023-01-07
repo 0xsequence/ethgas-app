@@ -12,8 +12,8 @@ import (
 	"github.com/0xsequence/ethgas-app/tracker"
 	"github.com/0xsequence/ethkit/ethgas"
 	"github.com/0xsequence/ethkit/ethmonitor"
-	"github.com/0xsequence/go-sequence/lib/logadapter"
 	"github.com/go-chi/httplog"
+	"github.com/goware/logadapter-zerolog"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -91,7 +91,7 @@ func New(cfg *config.Config) (*ETHGas, error) {
 		var monitor *ethmonitor.Monitor
 		modlog := log.Logger.With().Str("module", "monitor").Str("chain", chainHandle).Logger()
 		monitorOptions := ethmonitor.DefaultOptions
-		monitorOptions.Logger = logadapter.Wrap(modlog)
+		monitorOptions.Logger = logadapter.LogAdapter(modlog)
 		// if logLevel == zerolog.DebugLevel {
 		// 	monitorOptions.DebugLogging = true
 		// }
@@ -115,7 +115,7 @@ func New(cfg *config.Config) (*ETHGas, error) {
 		if minGasPrice == 0 {
 			minGasPrice = 1
 		}
-		gasGauge, err := ethgas.NewGasGaugeWei(logadapter.Wrap(modlog), monitor, minGasPrice, chainConfig.UseEIP1559)
+		gasGauge, err := ethgas.NewGasGaugeWei(logadapter.LogAdapter(modlog), monitor, minGasPrice, chainConfig.UseEIP1559)
 		if err != nil {
 			return nil, err
 		}
