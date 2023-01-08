@@ -15,7 +15,7 @@ require (
 	github.com/go-chi/stampede v0.5.1
 	github.com/goware/cachestore v0.6.0
 	github.com/goware/logadapter-zerolog v0.1.0
-	github.com/goware/rerun v0.0.7
+	github.com/goware/rerun v0.0.9
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/cobra v1.6.1
 	github.com/webrpc/webrpc v0.6.0

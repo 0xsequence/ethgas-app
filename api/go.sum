@@ -49,8 +49,8 @@ github.com/goware/logadapter-zerolog v0.1.0 h1:OU/Zn3M4CIJEwZsn5DYzkr/1OiRpA4IOh
 github.com/goware/logadapter-zerolog v0.1.0/go.mod h1:+8RRtDTrd1cr5yZCuECvYHl0OwxBHMU4hHoL4uvl/2A=
 github.com/goware/logger v0.1.0 h1:VB38nDsvhqPIRom/xi2iA3wq8WJRqwQx9liNT1PLGF8=
 github.com/goware/logger v0.1.0/go.mod h1:IC34c5H56R1I4/R/d51aQhzHsjSJqkQyIHyuJxOiu0w=
-github.com/goware/rerun v0.0.7 h1:7fKpWbvT4wGSWe+jpHJbAK7DWZXj1+ob8J3qFoNHPPY=
-github.com/goware/rerun v0.0.7/go.mod h1:QPi16JvIv1eHfrXXc24pBPJXipBcPe3rBz4gJJs/k78=
+github.com/goware/rerun v0.0.9 h1:xxn7XMs4XJF+xlNfm3QbwYF79wesg2AhSIaXtTBAbLM=
+github.com/goware/rerun v0.0.9/go.mod h1:QPi16JvIv1eHfrXXc24pBPJXipBcPe3rBz4gJJs/k78=
 github.com/goware/statik v0.2.0 h1:2dKnJIawSr/qbd4TdSgRtNc6mdVZrTOR56aSiL47460=
 github.com/goware/statik v0.2.0/go.mod h1:Fktf+coYRC3SB2RfBB++LAG6ojA/VzuDp0Jfd064ICs=
 github.com/goware/superr v0.0.2 h1:71xI6ojd+YXyq2RamI8lMpkYTNoErI5Uyrv8vFAPr1U=
