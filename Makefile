@@ -29,4 +29,4 @@ docker-run-webapp:
 docker-run-nginx:
 	docker run -d --name=nginx -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock \
 	--log-opt max-size=100m --log-opt max-file=5 \
-	jwilder/nginx-proxy
+	nginxproxy/nginx-proxy
