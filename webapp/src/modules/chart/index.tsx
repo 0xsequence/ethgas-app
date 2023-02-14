@@ -294,7 +294,7 @@ const GasStat = ({
   loading: boolean
 }) => {
   const getPricePerTransfer = useCallback(() => {
-    const TRANSFER_GAS_COST = 21000
+    const TRANSFER_GAS_COST = 65_000
     const GWEI_IN_ETH = 1000000000
     const price = TRANSFER_GAS_COST * usdPrice * gasPrice / GWEI_IN_ETH
 
