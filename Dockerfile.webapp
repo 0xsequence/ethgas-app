@@ -30,6 +30,9 @@ RUN npm config set unsafe-perm true && \
 
 COPY ./webapp /build
 WORKDIR /build
+
+ENV NODE_OPTIONS --openssl-legacy-provider
+
 RUN yarn install && yarn dist
 
 
