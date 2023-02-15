@@ -7,7 +7,7 @@ module github.com/0xsequence/ethgas-app
 go 1.18
 
 require (
-	github.com/0xsequence/ethkit v1.17.4
+	github.com/0xsequence/ethkit v1.19.5
 	github.com/BurntSushi/toml v0.4.1
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-chi/cors v1.2.0
@@ -19,7 +19,7 @@ require (
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/cobra v1.6.1
 	github.com/webrpc/webrpc v0.6.0
-	golang.org/x/tools v0.1.10
+	golang.org/x/tools v0.2.0
 )
 
 require (
@@ -32,7 +32,9 @@ require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
-	github.com/goware/channel v0.2.1 // indirect
+	github.com/goware/breaker v0.1.2 // indirect
+	github.com/goware/calc v0.2.0 // indirect
+	github.com/goware/channel v0.2.3 // indirect
 	github.com/goware/logger v0.1.0 // indirect
 	github.com/goware/statik v0.2.0 // indirect
 	github.com/goware/superr v0.0.2 // indirect
@@ -43,9 +45,11 @@ require (
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
-	golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3 // indirect
-	golang.org/x/sys v0.4.0 // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	golang.org/x/crypto v0.6.0 // indirect
+	golang.org/x/exp v0.0.0-20230124195608-d38c7dcee874 // indirect
+	golang.org/x/mod v0.6.0 // indirect
+	golang.org/x/net v0.6.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
 )
