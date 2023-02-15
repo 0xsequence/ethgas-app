@@ -7,7 +7,7 @@ module github.com/0xsequence/ethgas-app
 go 1.18
 
 require (
-	github.com/0xsequence/ethkit v1.19.5
+	github.com/0xsequence/ethkit v1.19.6
 	github.com/BurntSushi/toml v0.4.1
 	github.com/go-chi/chi/v5 v5.0.7
 	github.com/go-chi/cors v1.2.0
@@ -34,7 +34,7 @@ require (
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/goware/breaker v0.1.2 // indirect
 	github.com/goware/calc v0.2.0 // indirect
-	github.com/goware/channel v0.2.3 // indirect
+	github.com/goware/channel v0.2.4 // indirect
 	github.com/goware/logger v0.1.0 // indirect
 	github.com/goware/statik v0.2.0 // indirect
 	github.com/goware/superr v0.0.2 // indirect

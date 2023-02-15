@@ -33,7 +33,7 @@ func NewGasTracker(logger zerolog.Logger, gasGauge *ethgas.GasGauge) (*GasTracke
 }
 
 func (g *GasTracker) Start(ctx context.Context) error {
-	go g.Main()
+	go g.run()
 
 	err := g.ETHGasGauge.Run(ctx)
 	if err != nil {
@@ -43,7 +43,7 @@ func (g *GasTracker) Start(ctx context.Context) error {
 	return nil
 }
 
-func (g *GasTracker) Main() error {
+func (g *GasTracker) run() error {
 	sub := g.ETHGasGauge.Subscribe()
 	defer sub.Unsubscribe()
 
@@ -91,7 +91,7 @@ func (g *GasTracker) Main() error {
 			g.PriceHistory[latest.Block.NumberU64()] = gasPrices
 
 			// Suggested gas price
-			suggestedGasPrice := g.ETHGasGauge.WaitSuggestedGasPrice()
+			suggestedGasPrice := g.ETHGasGauge.SuggestedGasPrice()
 			if suggestedGasPrice.BlockNum != nil {
 				g.Suggested = append(g.Suggested, suggestedGasPrice)
 				if len(g.Suggested) > NumDataPoints {

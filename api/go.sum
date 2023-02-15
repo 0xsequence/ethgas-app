@@ -1,5 +1,5 @@
-github.com/0xsequence/ethkit v1.19.5 h1:9TVuawGbxiwaay0YIpwesvwzSmOgZQQusJgYHi0b3GI=
-github.com/0xsequence/ethkit v1.19.5/go.mod h1:B+I/LaEi5LNcgu1R/AHwtBBGe/Pd445dApNRTlmOjw0=
+github.com/0xsequence/ethkit v1.19.6 h1:rdWHLItyUKUtc474GIDarYh3Jve03SREgq17lvUbWm8=
+github.com/0xsequence/ethkit v1.19.6/go.mod h1:myc9PAsbQB07dxMsexpxHlBNzayxN4XNAK+7jcE5JeA=
 github.com/BurntSushi/toml v0.4.1 h1:GaI7EiDXDRfa8VshkTj7Fym7ha+y8/XxIgD2okUIjLw=
 github.com/BurntSushi/toml v0.4.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/btcsuite/btcd v0.23.4 h1:IzV6qqkfwbItOS/sg/aDfPDsjPP8twrCOE2R93hxMlQ=
@@ -47,8 +47,8 @@ github.com/goware/cachestore v0.6.0 h1:nslV9qOGUHW5f3ITmbQ0Ij2MQPvuJudE44IpV4Q5G
 github.com/goware/cachestore v0.6.0/go.mod h1:3j0qBcoyF1KO9VvjGDiQYMTiCwHSb0dxE/ZfRVQKuhA=
 github.com/goware/calc v0.2.0 h1:3B9qjXYpE0kgS4LhyklbM6X/0cOvZLdUZG7sdAuVCb4=
 github.com/goware/calc v0.2.0/go.mod h1:BSQUbfS6ICW9RvSV9SikDY+t6/HQKI+CUxIpjE3VD28=
-github.com/goware/channel v0.2.3 h1:TvFW8IB/rZCx9wQrLot878UbLr6eUlkG0XG9eINsF6U=
-github.com/goware/channel v0.2.3/go.mod h1:R1EdaSW0bQ7A6KvEtD/FZC4ZLrnf/TMnBrzzwXVfT7M=
+github.com/goware/channel v0.2.4 h1:ifU+wT0INGf0kdQpCnQRLAThOFUz98T0POHXmKsMat4=
+github.com/goware/channel v0.2.4/go.mod h1:R1EdaSW0bQ7A6KvEtD/FZC4ZLrnf/TMnBrzzwXVfT7M=
 github.com/goware/logadapter-zerolog v0.1.0 h1:OU/Zn3M4CIJEwZsn5DYzkr/1OiRpA4IOhbRuPjUH6yQ=
 github.com/goware/logadapter-zerolog v0.1.0/go.mod h1:+8RRtDTrd1cr5yZCuECvYHl0OwxBHMU4hHoL4uvl/2A=
 github.com/goware/logger v0.1.0 h1:VB38nDsvhqPIRom/xi2iA3wq8WJRqwQx9liNT1PLGF8=
